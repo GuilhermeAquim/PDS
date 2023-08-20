@@ -9,7 +9,7 @@ Felipe de Paula Gonçalves (Fullstack)
 
 # Escopo
 **Objetivo do sistema**
-Sistema de gestão de loja de venda de carros usados onde será possível registrar dados de cada carro disponível para venda com informações relativas a cada unidade em particular, assim como informações de mercado para auxiliar nas decisões de compra/venda.
+- Sistema de gestão de loja de venda de carros usados onde será possível registrar dados de cada carro disponível para venda com informações relativas a cada unidade em particular, assim como informações de mercado para auxiliar nas decisões de compra/venda.
 
 **Principais features**
 - Armazenamento de informações de cada unidade de veículo da loja (placa, ano, modelo, chassi, documento, cor, condição)
