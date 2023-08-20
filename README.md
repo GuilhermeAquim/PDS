@@ -1,5 +1,5 @@
-# PDS
-Repositório para o trabalho prático de Prática em Desenvolvimento de Software do DCC-UFMG
+# SGNV - Sistema de Gerenciamento de Negociação de Veículos
+Trabalho prático de Prática em Desenvolvimento de Software do DCC-UFMG
 
 # Membros e funções
 - Arthur de Brito Bonifácio (Fullstack)
