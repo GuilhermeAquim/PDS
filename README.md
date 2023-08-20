@@ -8,10 +8,10 @@ Augusto Maillo Queiroga de Figueiredo (Fullstack)
 Felipe de Paula Gonçalves (Fullstack)
 
 # Escopo
-# Objetivo do sistema
+**Objetivo do sistema**
 Sistema de gestão de loja de venda de carros usados onde será possível registrar dados de cada carro disponível para venda com informações relativas a cada unidade em particular, assim como informações de mercado para auxiliar nas decisões de compra/venda.
 
-# Principais features
+**Principais features**
 - Armazenamento de informações de cada unidade de veículo da loja (placa, ano, modelo, chassi, documento, cor, condição)
   - Registro de custos adicionais com cada veículo (manutenção, pintura, limpeza…)
 - Informações de mercado (valor da tabela fipe)
@@ -21,7 +21,7 @@ Sistema de gestão de loja de venda de carros usados onde será possível regist
 - Gerenciamento de estoque
 - Controle de acesso ao sistema
 
-# Tecnologias
+**Tecnologias**
 - Python
 - Sqlite
 - GitHub
