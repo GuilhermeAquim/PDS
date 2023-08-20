@@ -2,10 +2,10 @@
 Repositório para o trabalho prático de Prática em Desenvolvimento de Software do DCC-UFMG
 
 # Membros e funções
-Arthur de Brito Bonifácio (Fullstack)
-Guilherme Aquim Filho (Fullstack)
-Augusto Maillo Queiroga de Figueiredo (Fullstack)
-Felipe de Paula Gonçalves (Fullstack)
+- Arthur de Brito Bonifácio (Fullstack)
+- Guilherme Aquim Filho (Fullstack)
+- Augusto Maillo Queiroga de Figueiredo (Fullstack)
+- Felipe de Paula Gonçalves (Fullstack)
 
 # Escopo
 **Objetivo do sistema**
