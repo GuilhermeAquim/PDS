@@ -48,11 +48,11 @@ Trabalho prático de Prática em Desenvolvimento de Software do DCC-UFMG
 **Backlog - Sprint**
 - História #1: Como gerente, eu gostaria de criar e remover usuários do sistema
 - Tarefas e responsáveis:
- - Criar a tabela de usuários - Augusto
- - Criar a tela de usuários - Felipe
- - Criar classe modelo Usuários - Arthur
- - Criar rota para criação de usuário - Guilherme
- - Criar rota para remoção de usuário - Guilherme
+  - Criar a tabela de usuários - Augusto
+  - Criar a tela de usuários - Felipe
+  - Criar classe modelo Usuários - Arthur
+  - Criar rota para criação de usuário - Guilherme
+  - Criar rota para remoção de usuário - Guilherme
 
 - História #2: Como usuário, eu gostaria de fazer login na plataforma
 - Tarefas e responsáveis:
