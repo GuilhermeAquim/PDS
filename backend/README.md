@@ -20,3 +20,6 @@ pip install -r requirements.txt
 python main.py
 ```
 
+# Documentação
+
+O arquivo `backend.postman_collection.json` especifica como as chamadas de API devem ser feitas.
