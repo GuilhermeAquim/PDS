@@ -11,7 +11,7 @@ class AuthRepository(ABC):
         pass
 
     @abstractmethod
-    def validate_token(self, token: str) -> int:
+    def validate_token(self, token: str) -> dict:
         pass
 
     @abstractmethod

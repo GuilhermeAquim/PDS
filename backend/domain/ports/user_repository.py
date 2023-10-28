@@ -7,7 +7,7 @@ class UserNotFoundError(Exception):
 class UserRepository(ABC):
     
     @abstractmethod
-    def create_user(self, login: str, password: str) -> int:
+    def create_user(self, session_user: User, login: str, password: str, admin: bool) -> int:
         pass
 
     @abstractmethod

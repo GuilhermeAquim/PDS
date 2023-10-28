@@ -14,9 +14,12 @@ class AuthRepositoryJwt(AuthRepository):
         self._user_rep = user_rep
     
     @staticmethod
-    def _create_token():
+    def _create_token(user_id):
         token = jwt.encode(
-            payload={'exp' : datetime.now(timezone.utc) + timedelta(seconds=TOKEN_TIME_DURATION)},
+            payload={
+                'exp' : datetime.now(timezone.utc) + timedelta(seconds=TOKEN_TIME_DURATION),
+                'user_id': user_id
+                },
             key=SECRET
             )
         return token
@@ -24,17 +27,17 @@ class AuthRepositoryJwt(AuthRepository):
     def login(self, login: str, password: str) -> str:
         try:
             user = self._user_rep.get_user_by_login(login=login)
-        except UserNotFoundError:
-            raise AuthenticationError("User not found.")
+        except UserNotFoundError as exc:
+            raise AuthenticationError("User not found.") from exc
         if user.password == password:
-            return self._create_token()
+            return self._create_token(user.id_)
         raise AuthenticationError("Login failed.")
 
-    def validate_token(self, token: str) -> int:
+    def validate_token(self, token: str) -> dict:
         try:
-            return jwt.decode(token, key=SECRET, algorithms=['HS256'])['exp']
+            return jwt.decode(token, key=SECRET, algorithms=['HS256'])
         except jwt.ExpiredSignatureError as e:
             raise AuthenticationError(e.args[0])
         
     def refresh_token(self, token: str) -> str:
-        return self._create_token()
+        return self._create_token(user_id=self.validate_token(token)['user_id'])

@@ -5,7 +5,13 @@ from adapter.user_repository_sqlite import UserRepositorySQLite
 DB_PATH = 'infrastructure/database.db'
 
 user_rep = UserRepositorySQLite(database_path=DB_PATH)
+
 auth_rep = AuthRepositoryJwt(user_rep=user_rep)
-app = FlaskApp(auth_rep=auth_rep)
+# print(user_rep.get_user_by_login('admin'))
+
+app = FlaskApp(
+    auth_rep=auth_rep,
+    user_rep=user_rep
+    )
 
 app.run()

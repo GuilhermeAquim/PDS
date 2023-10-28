@@ -7,10 +7,15 @@ class UserRepositorySQLite(UserRepository):
     def __init__(self, database_path):
         self.db_path = database_path
 
-    def create_user(self, login: str, password: str):
+    def create_user(self, session_user_id: int, login: str, password: str, admin: bool):
+        user = self.get_user_by_id(session_user_id)
+        if not user.admin:
+            raise PermissionError
+        
+        # TODO: check if same login already exists
         with sqlite3.connect(self.db_path) as conn:
             cursor = conn.cursor()
-            cursor.execute("INSERT INTO users (login, password, admin) VALUES (?, ?, 0)", (login, password))
+            cursor.execute("INSERT INTO users (login, password, admin) VALUES (?, ?, ?)", (login, password, int(admin)))
             conn.commit()
             return cursor.lastrowid
 
@@ -32,3 +37,9 @@ class UserRepositorySQLite(UserRepository):
             return User(*row)
         raise UserNotFoundError
 
+
+    def set_admin_value(self, login:str, admin:bool): 
+        with sqlite3.connect(self.db_path) as conn:
+            cursor = conn.cursor()
+            cursor.execute("UPDATE users SET admin = ? WHERE login = ?", (int(admin), login))
+            conn.commit()
