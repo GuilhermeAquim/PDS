@@ -1,7 +1,7 @@
 import sqlite3
 import os
 
-DB_PATH = r'infrastrucutre/database.db'
+DB_PATH = r'infrastructure/database.db'
 
 if os.path.isfile(DB_PATH):
     choice = input('DB already exists. Do you want do recreate? (All data will be lost) [y/n]: ')

@@ -10,7 +10,7 @@ Referência (Linux): https://stackoverflow.com/questions/41427500/creating-a-vir
 ```
 pip install virtualenv
 virtualenv venv
-./venv/Scripts/activate # Versão Windows
+.\venv\Scripts\activate # Versão Windows
 pip install -r requirements.txt
 ```
 
