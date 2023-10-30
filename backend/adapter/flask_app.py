@@ -26,7 +26,7 @@ class FlaskApp:
             except AuthenticationError as exc:
                 return jsonify({'message' : exc.args[0]}), 401
             
-        @self._app.route('/create_user', methods=['POST'])
+        @self._app.route('/user/create', methods=['POST'])
         @expects_json(CREATE_USER_SCHEMA)
         def create_user():
             
@@ -43,7 +43,47 @@ class FlaskApp:
                 return jsonify({'created_user_id': creation})
             except PermissionError:
                 return jsonify({'message' : 'User does not have acces to create new users.'}), 401
+            
+        @self._app.route('/user/remove', methods=['POST'])
+        def remove_user():
+            # todo
+            raise NotImplementedError 
 
+        @self._app.route('/proposal/list', methods=['POST'])
+        def list_proposals():
+            # todo
+            raise NotImplementedError
+        
+        @self._app.route('/proposal/create', methods=['POST'])
+        def create_proposal():
+            # todo
+            raise NotImplementedError
+        
+        @self._app.route('/proposal/create', methods=['POST'])
+        def remove_proposal():
+            # todo
+            raise NotImplementedError
+        
+        @self._app.route('/item/search', methods=['GET'])
+        def search_item():
+            # todo
+            raise NotImplementedError
+        
+        @self._app.route('/item/add', methods=['POST'])
+        def add_item():
+            # todo
+            raise NotImplementedError
+        
+        @self._app.route('/item/remove', methods=['POST'])
+        def remove_item():
+            # todo
+            raise NotImplementedError
+        
+        @self._app.route('/sales/list', methods=['GET'])
+        def list_sales():
+            # todo 
+            raise NotImplementedError
+        
     def run(self):
         self._app.run(host='localhost', port=5050)
         
