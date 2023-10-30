@@ -6,6 +6,3 @@ class User:
     login: str
     password: str
     admin: bool
-    
-    
-    
