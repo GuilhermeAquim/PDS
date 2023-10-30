@@ -7,6 +7,8 @@ class Item:
     name: str
     icon: str
     inserted_date: datetime
-    pendent: bool
+    approved: bool
     proposed_date: datetime
     annotation: str
+    sold: bool
+    sale_date: datetime

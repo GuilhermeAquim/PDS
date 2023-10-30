@@ -12,6 +12,7 @@ if os.path.isfile(DB_PATH):
 else:
     print('Creating DB...')
   
+os.remove(DB_PATH)
 conn = sqlite3.connect(DB_PATH)
 cursor = conn.cursor()
 
@@ -22,6 +23,19 @@ cursor.execute("""
         login TEXT NOT NULL,
         password TEXT NOT NULL,
         admin INTEGER
+    )
+""")
+cursor.execute("""
+    CREATE TABLE items (
+        id INTEGER PRIMARY KEY,
+        name TEXT NOT NULL,
+        icon TEXT,
+        inserted_date DATETIME NOT NULL,
+        approved INTEGER NOT NULL, 
+        proposed_date DATETIME NOT NULL,
+        annotation TEXT,
+        sold INTEGER,
+        sale_date DATETIME
     )
 """)
 
