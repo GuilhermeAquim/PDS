@@ -69,10 +69,12 @@
 							}
 						},
 						"url": {
-							"raw": "{{api_uri}}/login",
+							"raw": "http://localhost:5050/login",
+							"protocol": "http",
 							"host": [
-								"{{api_uri}}"
+								"localhost"
 							],
+							"port": "5050",
 							"path": [
 								"login"
 							]
@@ -191,12 +193,13 @@
 					}
 				},
 				"url": {
-					"raw": "{{api_uri}}/create_user",
+					"raw": "{{api_uri}}/user/create",
 					"host": [
 						"{{api_uri}}"
 					],
 					"path": [
-						"create_user"
+						"user",
+						"create"
 					],
 					"query": [
 						{
@@ -208,112 +211,7 @@
 				},
 				"description": "Realiza o login e devolve, em caso de sucesso, um token para validar as demais operações."
 			},
-			"response": [
-				{
-					"name": "Success login",
-					"originalRequest": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"login\": \"admin\",\r\n    \"password\": \"hashed_password\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{api_uri}}/login",
-							"host": [
-								"{{api_uri}}"
-							],
-							"path": [
-								"login"
-							]
-						}
-					},
-					"status": "OK",
-					"code": 200,
-					"_postman_previewlanguage": "json",
-					"header": [
-						{
-							"key": "Server",
-							"value": "Werkzeug/2.2.2 Python/3.10.9"
-						},
-						{
-							"key": "Date",
-							"value": "Sat, 28 Oct 2023 19:45:03 GMT"
-						},
-						{
-							"key": "Content-Type",
-							"value": "application/json"
-						},
-						{
-							"key": "Content-Length",
-							"value": "118"
-						},
-						{
-							"key": "Connection",
-							"value": "close"
-						}
-					],
-					"cookie": [],
-					"body": "{\n    \"token\": \"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2OTg1MjQxMDN9.qhWM4G0_fCA-8Cx2V7W3J196zAn1pAqz5-r_PMA4UHw\"\n}"
-				},
-				{
-					"name": "Fail Login",
-					"originalRequest": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"login\": \"admin2\",\r\n    \"password\": \"hashed_password\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{api_uri}}/login",
-							"host": [
-								"{{api_uri}}"
-							],
-							"path": [
-								"login"
-							]
-						}
-					},
-					"status": "UNAUTHORIZED",
-					"code": 401,
-					"_postman_previewlanguage": "json",
-					"header": [
-						{
-							"key": "Server",
-							"value": "Werkzeug/2.2.2 Python/3.10.9"
-						},
-						{
-							"key": "Date",
-							"value": "Sat, 28 Oct 2023 19:46:08 GMT"
-						},
-						{
-							"key": "Content-Type",
-							"value": "application/json"
-						},
-						{
-							"key": "Content-Length",
-							"value": "30"
-						},
-						{
-							"key": "Connection",
-							"value": "close"
-						}
-					],
-					"cookie": [],
-					"body": "{\n    \"message\": \"User not found.\"\n}"
-				}
-			]
+			"response": []
 		}
 	],
 	"event": [
