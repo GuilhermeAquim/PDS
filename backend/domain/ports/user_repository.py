@@ -4,6 +4,9 @@ from domain.entities.user import User
 class UserNotFoundError(Exception):
     pass
 
+class UserAlreadyExists(Exception):
+    pass
+
 class UserRepository(ABC):
     
     @abstractmethod

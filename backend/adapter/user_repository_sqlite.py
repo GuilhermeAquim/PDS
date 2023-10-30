@@ -12,8 +12,12 @@ class UserRepositorySQLite(UserRepository):
         if not user.admin:
             raise PermissionError
         
-        # TODO: check if same login already exists
+    
+        if self.get_user_by_login(login):
+            raise UserAlreadyExists() 
+
         with sqlite3.connect(self.db_path) as conn:
+
             cursor = conn.cursor()
             cursor.execute("INSERT INTO users (login, password, admin) VALUES (?, ?, ?)", (login, password, int(admin)))
             conn.commit()
