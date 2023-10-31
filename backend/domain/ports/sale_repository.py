@@ -1,7 +1,11 @@
 from abc import abstractmethod, ABC
 from domain.entities.item import Item
 
-class SaleNotFound(Exception):
+
+class ItemNotExists(Exception):
+    pass
+
+class UserNotExists(Exception):
     pass
 
 class SaleRepository(ABC):

@@ -24,20 +24,20 @@ class BaseSQLite:
                 return cursor.fetchone()
             return cursor.fetchall()
         
-    def insert_data(self, insert_query, args):
+    def insert_data(self, insert_query, args = tuple()):
         with sqlite3.connect(self.db_path) as conn:
             cursor = conn.cursor()
             cursor.execute(insert_query, args)
             conn.commit()
             return cursor.lastrowid
         
-    def update_data(self, update_query, args):
+    def update_data(self, update_query, args = tuple()):
         with sqlite3.connect(self.db_path) as conn:
             cursor = conn.cursor()
             cursor.execute(update_query, args)
             conn.commit()
             
-    def delete_date(self, delete_query, args):
+    def delete_data(self, delete_query, args = tuple()):
         with sqlite3.connect(self.db_path) as conn:
             cursor = conn.cursor()
             cursor.execute(delete_query, args)
