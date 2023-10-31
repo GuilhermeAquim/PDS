@@ -1,49 +1,48 @@
 from domain.ports.user_repository import UserRepository, UserNotFoundError, UserAlreadyExists
 from domain.entities.user import User
+from adapter.base_sqlite import BaseSQLite
 import sqlite3
 
 
-class UserRepositorySQLite(UserRepository):
-    def __init__(self, database_path):
-        self.db_path = database_path
+class UserRepositorySQLite(BaseSQLite, UserRepository):
+    def __init__(self, database_path) -> None:
+        super().__init__(database_path)
 
     def create_user(self, session_user_id: int, login: str, password: str, admin: bool):
         user = self.get_user_by_id(session_user_id)
         if not user.admin:
             raise PermissionError
         
-    
-        if self.get_user_by_login(login):
+        try:
+            self.get_user_by_login(login)
             raise UserAlreadyExists() 
+        except UserNotFoundError:
+            pass
+            
 
-        with sqlite3.connect(self.db_path) as conn:
+        query = "INSERT INTO users (login, password, admin) VALUES (?, ?, ?)"
+        args = (login, password, int(admin))
 
-            cursor = conn.cursor()
-            cursor.execute("INSERT INTO users (login, password, admin) VALUES (?, ?, ?)", (login, password, int(admin)))
-            conn.commit()
-            return cursor.lastrowid
+        return self.insert_data(query, args)
 
     def get_user_by_id(self, user_id: int):
-        with sqlite3.connect(self.db_path) as conn:
-            cursor = conn.cursor()
-            cursor.execute("SELECT id, login, password, admin FROM users WHERE id = ?", (str(user_id)))
-            row = cursor.fetchone()
+        query = "SELECT id, login, password, admin FROM users WHERE id = ?"
+        args = (str(user_id))
+        row = self.select_data(query, args, fetchone=True)
         if row:
             return User(*row)
         raise UserNotFoundError
 
     def get_user_by_login(self, login: str):
-        with sqlite3.connect(self.db_path) as conn:
-            cursor = conn.cursor()
-            cursor.execute("SELECT id, login, password, admin FROM users WHERE login = ?", (login, ))
-            row = cursor.fetchone()
+        query = "SELECT id, login, password, admin FROM users WHERE login = ?"
+        args = (login, )
+        row = self.select_data(query, args, fetchone=True)
         if row:
             return User(*row)
         raise UserNotFoundError
 
 
-    def set_admin_value(self, login:str, admin:bool): 
-        with sqlite3.connect(self.db_path) as conn:
-            cursor = conn.cursor()
-            cursor.execute("UPDATE users SET admin = ? WHERE login = ?", (int(admin), login))
-            conn.commit()
+    def set_admin_value(self, login:str, admin:bool):
+        query = "UPDATE users SET admin = ? WHERE login = ?"
+        args = (int(admin), login)
+        self.update_data(query, args)
