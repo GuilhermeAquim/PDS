@@ -1,4 +1,4 @@
-from domain.ports.user_repository import UserRepository, UserNotFoundError
+from domain.ports.user_repository import UserRepository, UserNotFoundError, UserAlreadyExists
 from domain.entities.user import User
 import sqlite3
 

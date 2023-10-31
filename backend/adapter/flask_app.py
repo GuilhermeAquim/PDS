@@ -47,7 +47,7 @@ class FlaskApp:
         @self._app.route('/user/remove', methods=['POST'])
         def remove_user():
             # todo
-            raise NotImplementedError 
+            raise NotImplementedError
 
         @self._app.route('/proposal/list', methods=['POST'])
         def list_proposals():
