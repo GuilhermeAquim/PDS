@@ -50,4 +50,13 @@ CREATE_PROPOSAL_SCHEMA = {
         "sale_price" : {"type": "number"},
         "sale_user_id" : {"type": "number"}  
     },
+    "required": ["name", "purchase_price"]
+}
+
+REMOVE_USER_SCHEMA = {
+    "type" : "object",
+    "properties" : {
+        "user_id" : {"type": "number"}
+    },
+    "required": ["user_id"]
 }

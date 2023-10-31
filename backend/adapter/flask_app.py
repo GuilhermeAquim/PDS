@@ -16,6 +16,12 @@ class FlaskApp:
         
         self.__setup_routes()
         
+    def __validate_token(self, token):
+        try:
+            return self._auth_rep.validate_token(token)
+        except AuthenticationError as exc:
+            return jsonify({'message' : exc.args[0]}), 401
+        
     def __setup_routes(self):
         
         @self._app.route('/login', methods=['POST'])
@@ -34,13 +40,14 @@ class FlaskApp:
         @self._app.route('/user/create', methods=['POST'])
         @expects_json(CREATE_USER_SCHEMA)
         def create_user():
-            
             payload = request.json
-            print(payload)
+            token = request.headers.get('session_token')
             new_user_data = payload['new_user']
+            validated_token = self.__validate_token(token)
+            
             try:
                 creation = self._user_rep.create_user(
-                    self._auth_rep.validate_token(payload.get('token'))['user_id'],
+                    validated_token.get('user_id'),
                     new_user_data.get('login'),
                     new_user_data.get('password'),
                     new_user_data.get('admin'),
@@ -48,17 +55,30 @@ class FlaskApp:
                 return jsonify({'created_user_id': creation})
             except PermissionError:
                 return jsonify({'message' : 'User does not have acces to create new users.'}), 401
-            
+
+                
         @self._app.route('/user/remove', methods=['POST'])
+        @expects_json(REMOVE_USER_SCHEMA)
         def remove_user():
-            # todo
-            raise NotImplementedError
+            payload = request.json
+            to_remove_user_id = payload.get('user_id')
+            token = request.headers.get('session_token')
+            validated_token = self.__validate_token(token)
+            
+            try:
+                session_user_id = validated_token.get('user_id')
+                self._user_rep.remove_user(session_user_id=session_user_id, 
+                                           to_remove_user_id=to_remove_user_id)
+                return jsonify({"success": True})
+            except PermissionError:
+                return jsonify({'message' : 'User does not have acces to create new users.'}), 401
 
         @self._app.route('/proposal/search', methods=['GET'])
         def search_proposal():
-            request
             item_id = request.args.get('item_id')
             name = request.args.get('name')
+            token = request.headers.get('session_token')
+            validated_token = self.__validate_token(token)
             
             proposals = self._proposal_rep.search_proposal(item_id=item_id, name=name)
             
@@ -68,6 +88,8 @@ class FlaskApp:
         @expects_json(CREATE_PROPOSAL_SCHEMA)
         def create_proposal():
             payload = request.json
+            token = request.headers.get('session_token')
+            self.__validate_token(token)
             
             try:
                 self._proposal_rep.create_proposal(
@@ -90,6 +112,9 @@ class FlaskApp:
         @self._app.route('/proposal/deny', methods=['POST'])
         def deny_proposal():
             payload = request.json
+            token = request.headers.get('session_token')
+            self.__validate_token(token)
+            
             try:
                 self._proposal_rep.deny_proposal(item_id=payload.get('item_id'))
                 return jsonify({'success': True})
@@ -99,6 +124,9 @@ class FlaskApp:
         @self._app.route('/proposal/approve', methods=['POST'])
         def approve_proposal():
             payload = request.json
+            token = request.headers.get('session_token')
+            self.__validate_token(token)
+            
             try:
                 self._proposal_rep.approve_proposal(item_id=payload.get('item_id'))
                 return jsonify({'success': True})
@@ -108,6 +136,9 @@ class FlaskApp:
         @self._app.route('/proposal/update', methods=['POST'])
         def update_proposal():
             payload = request.json
+            token = request.headers.get('session_token')
+            self.__validate_token(token)
+            
             try:
                 self._proposal_rep.update_proposal(
                     item_id=payload.get('item_id'),
@@ -129,7 +160,8 @@ class FlaskApp:
         
         @self._app.route('/item/search', methods=['GET'])
         def search_item():
-            request
+            token = request.headers.get('session_token')
+            self.__validate_token(token)
             item_id = request.args.get('item_id')
             name = request.args.get('name')
             
@@ -139,6 +171,8 @@ class FlaskApp:
         
         @self._app.route('/item/remove', methods=['POST'])
         def remove_item():
+            token = request.headers.get('session_token')
+            self.__validate_token(token)
             payload = request.json
             try:
                 self._item_rep.remove_item(item_id=payload.get('item_id'))
@@ -149,6 +183,9 @@ class FlaskApp:
         @self._app.route('/item/update', methods=['POST'])
         def update_item():
             payload = request.json
+            token = request.headers.get('session_token')
+            self.__validate_token(token)
+            
             try:
                 self._item_rep.update_item(
                     item_id=payload.get('item_id'),
@@ -173,7 +210,9 @@ class FlaskApp:
         
         @self._app.route('/sales/list', methods=['GET'])
         def list_sales():
-            request
+            token = request.headers.get('session_token')
+            self.__validate_token(token)
+            
             item_id = request.args.get('item_id')
             name = request.args.get('name')
             
@@ -184,6 +223,8 @@ class FlaskApp:
         @self._app.route('/sales/create', methods=['POST'])
         @expects_json(CREATE_SALE_SCHEMA)
         def create_sale():
+            token = request.headers.get('session_token')
+            self.__validate_token(token)
             payload = request.json
             
             try:
