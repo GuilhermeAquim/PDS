@@ -21,7 +21,6 @@ class UserRepositorySQLite(BaseSQLite, UserRepository):
         except UserNotFoundError:
             pass
             
-
         query = "INSERT INTO users (login, password, admin) VALUES (?, ?, ?)"
         args = (login, password, int(admin))
 
