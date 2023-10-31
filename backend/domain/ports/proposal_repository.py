@@ -1,5 +1,5 @@
 from abc import abstractmethod, ABC
-from domain.entities.user import Item
+from domain.entities.item import Item
 
 class ProposalRepository(ABC):
     

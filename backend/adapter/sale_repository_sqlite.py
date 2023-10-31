@@ -14,9 +14,12 @@ class SaleRepositorySQLite(BaseSQLite, SaleRepository):
         if item_id:
             query += f"AND item_id = {item_id}"
         if name:
-            query += f"AND name LIKE '{name}'"
+            query += f"AND name LIKE '%{name}%'"
         
-        row = self.select_data(query, args= None)
-        if row:
-            return Item(*row)
-        raise SaleNotFound(f"Sale id: {item_id} | name: {name} not found")
+        rows = self.select_data(query)
+        if rows:
+            return [Item(*row) for row in rows]
+        return []
+    
+    def sell_item(self, item_id, value) -> bool:
+        return super().sell_item(item_id, value)

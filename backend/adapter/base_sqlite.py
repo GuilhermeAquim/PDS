@@ -6,7 +6,7 @@ class BaseSQLite:
         
 
         
-    def select_data(self, query, args, fetchone = False):
+    def select_data(self, query, args = tuple(), fetchone = False):
         """ Perform a SQL SELECT QUERY
 
         Args:
