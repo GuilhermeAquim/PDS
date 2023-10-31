@@ -54,20 +54,78 @@ class FlaskApp:
             # todo
             raise NotImplementedError
 
-        @self._app.route('/proposal/list', methods=['POST'])
-        def list_proposals():
-            # todo
-            raise NotImplementedError
-        
+        @self._app.route('/proposal/search', methods=['GET'])
+        def search_proposal():
+            request
+            item_id = request.args.get('item_id')
+            name = request.args.get('name')
+            
+            proposals = self._proposal_rep.search_proposal(item_id=item_id, name=name)
+            
+            return jsonify({'count': len(proposals), 'items' : proposals})
+
         @self._app.route('/proposal/create', methods=['POST'])
+        @expects_json(CREATE_PROPOSAL_SCHEMA)
         def create_proposal():
-            # todo
-            raise NotImplementedError
+            payload = request.json
+            
+            try:
+                self._proposal_rep.create_proposal(
+                    payload.get('name'),
+                    payload.get('icon'),
+                    payload.get('year'),
+                    payload.get('color'),
+                    payload.get('manufacturer'),
+                    payload.get('proposed_date'),
+                    payload.get('proposal_user_id'),
+                    payload.get('annotation'),
+                    payload.get('purchase_price'),
+                    payload.get('sale_price'),
+                    payload.get('sale_user_id'),
+                )
+                return jsonify({'success': True})
+            except (UserNotExists) as exc:
+                return jsonify({'error' : exc.args[0]}), 404
         
-        @self._app.route('/proposal/create', methods=['POST'])
-        def remove_proposal():
-            # todo
-            raise NotImplementedError
+        @self._app.route('/proposal/deny', methods=['POST'])
+        def deny_proposal():
+            payload = request.json
+            try:
+                self._proposal_rep.deny_proposal(item_id=payload.get('item_id'))
+                return jsonify({'success': True})
+            except (ItemNotExists) as exc:
+                return jsonify({'error' : exc.args[0]}), 404
+            
+        @self._app.route('/proposal/approve', methods=['POST'])
+        def approve_proposal():
+            payload = request.json
+            try:
+                self._proposal_rep.approve_proposal(item_id=payload.get('item_id'))
+                return jsonify({'success': True})
+            except (ItemNotExists) as exc:
+                return jsonify({'error' : exc.args[0]}), 404
+            
+        @self._app.route('/proposal/update', methods=['POST'])
+        def update_proposal():
+            payload = request.json
+            try:
+                self._proposal_rep.update_proposal(
+                    item_id=payload.get('item_id'),
+                    name=payload.get('name'),
+                    icon=payload.get('icon'),
+                    year=payload.get('year'),
+                    color=payload.get('color'),
+                    manufacturer=payload.get('manufacturer'),
+                    proposed_date=payload.get('proposed_date'),
+                    proposal_user_id=payload.get('proposal_user_id'),
+                    annotation=payload.get('annotation'),
+                    purchase_price=payload.get('purchase_price'),
+                    sale_price=payload.get('sale_price'),
+                    sale_user_id=payload.get('sale_user_id'),
+                )
+                return jsonify({'success': True})
+            except (ItemNotExists) as exc:
+                return jsonify({'error' : exc.args[0]}), 404
         
         @self._app.route('/item/search', methods=['GET'])
         def search_item():
