@@ -34,3 +34,20 @@ CREATE_SALE_SCHEMA = {
     },
     "required": ["item_id", "sale_price", "sale_user_id"]
 }
+
+CREATE_PROPOSAL_SCHEMA = {
+    "type" : "object",
+    "properties" : {
+        "name" : {"type": "string"},
+        "icon" : {"type": "string"},
+        "year" : {"type": "number"},
+        "color" : {"type": "string"},
+        "manufacturer" : {"type": "string"},
+        "proposed_date" : {"type": "string"},
+        "proposal_user_id" : {"type": "number"},
+        "annotation" : {"type": "string"},
+        "purchase_price" : {"type": "number"},
+        "sale_price" : {"type": "number"},
+        "sale_user_id" : {"type": "number"}  
+    },
+}

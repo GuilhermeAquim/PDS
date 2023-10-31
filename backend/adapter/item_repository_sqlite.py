@@ -33,7 +33,7 @@ class ItemRepositorySQLite(BaseSQLite, ItemRepository):
         except Exception as e:
             return False
 
-    def update_item(self, item_id, name, icon, year, color, manufacturer, approved_date, approved, proposed_date, proposal_user_id, annotation, purchase_price, sale_price, sold, sale_date, sale_annotation, sale_user_id) -> bool:
+    def update_item(self, item_id, name, icon, year, color, manufacturer, proposed_date, proposal_user_id, annotation, purchase_price, sale_price, sold, sale_date, sale_annotation, sale_user_id) -> bool:
         args = []
         update_parts = []
 
@@ -52,12 +52,6 @@ class ItemRepositorySQLite(BaseSQLite, ItemRepository):
         if manufacturer is not None:
             update_parts.append("manufacturer = %s")
             args.append(manufacturer)
-        if approved_date is not None:
-            update_parts.append("approved_date = %s")
-            args.append(approved_date)
-        if approved is not None:
-            update_parts.append("approved = %s")
-            args.append(approved)
         if proposed_date is not None:
             update_parts.append("proposed_date = %s")
             args.append(proposed_date)

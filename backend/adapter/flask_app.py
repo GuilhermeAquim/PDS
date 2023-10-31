@@ -5,12 +5,14 @@ from adapter.flask_schemas import *
 
 
 class FlaskApp:
-    def __init__(self, auth_rep : AuthRepository, user_rep: UserRepository, sale_rep : SaleRepository) -> None:
+    def __init__(self, auth_rep : AuthRepository, user_rep: UserRepository, sale_rep : SaleRepository, item_rep : ItemRepository, proposal_rep : ProposalRepository) -> None:
         self._app = Flask(__name__)
         
         self._auth_rep = auth_rep
         self._user_rep = user_rep
         self._sale_rep = sale_rep
+        self._item_rep = item_rep
+        self._proposal_rep = proposal_rep
         
         self.__setup_routes()
         
@@ -69,18 +71,47 @@ class FlaskApp:
         
         @self._app.route('/item/search', methods=['GET'])
         def search_item():
-            # todo
-            raise NotImplementedError
-        
-        @self._app.route('/item/add', methods=['POST'])
-        def add_item():
-            # todo
-            raise NotImplementedError
+            request
+            item_id = request.args.get('item_id')
+            name = request.args.get('name')
+            
+            items = self._item_rep.search_item(item_id=item_id, name=name)
+            
+            return jsonify({'count': len(items), 'items' : items})
         
         @self._app.route('/item/remove', methods=['POST'])
         def remove_item():
-            # todo
-            raise NotImplementedError
+            payload = request.json
+            try:
+                self._item_rep.remove_item(item_id=payload.get('item_id'))
+                return jsonify({'success': True})
+            except (ItemNotExists) as exc:
+                return jsonify({'error' : exc.args[0]}), 404
+            
+        @self._app.route('/item/update', methods=['POST'])
+        def update_item():
+            payload = request.json
+            try:
+                self._item_rep.update_item(
+                    item_id=payload.get('item_id'),
+                    name=payload.get('name'),
+                    icon=payload.get('icon'),
+                    year=payload.get('year'),
+                    color=payload.get('color'),
+                    manufacturer=payload.get('manufacturer'),
+                    proposed_date=payload.get('proposed_date'),
+                    proposal_user_id=payload.get('proposal_user_id'),
+                    annotation=payload.get('annotation'),
+                    purchase_price=payload.get('purchase_price'),
+                    sale_price=payload.get('sale_price'),
+                    sold=payload.get('sold'),
+                    sale_date=payload.get('sale_date'),
+                    sale_annotation=payload.get('sale_annotation'),
+                    sale_user_id=payload.get('sale_user_id'),
+                )
+                return jsonify({'success': True})
+            except (ItemNotExists) as exc:
+                return jsonify({'error' : exc.args[0]}), 404
         
         @self._app.route('/sales/list', methods=['GET'])
         def list_sales():
