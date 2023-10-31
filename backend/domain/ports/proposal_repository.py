@@ -20,7 +20,7 @@ class ProposalRepository(ABC):
         pass
     
     @abstractmethod
-    def approve_proposal(self, item_id, value) -> bool:
+    def approve_proposal(self, item_id) -> bool:
         # set item approved = 1
         pass
     

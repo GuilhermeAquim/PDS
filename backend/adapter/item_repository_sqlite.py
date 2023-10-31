@@ -1,4 +1,4 @@
-from domain.ports.item_repository import ItemRepository, ItemNotFound
+from domain.ports.item_repository import ItemRepository
 from domain.entities.item import Item
 from adapter.base_sqlite import BaseSQLite
 
