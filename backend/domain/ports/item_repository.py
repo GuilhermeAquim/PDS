@@ -3,14 +3,17 @@ from domain.entities.user import Item
 
 class ItemRepository(ABC):
     @abstractmethod
-    def search_item(self, name):
+    def search_item(self, name = None, item_id = None) -> list[Item]:
+        # return items that match name/item_id or all of them if both = None
+        # only items that werent sold yet
         pass
     
     @abstractmethod
-    def add_item(self, name, icon, year, color, manufacturer, annotation, purchase_price) -> int:
-        pass
-    
-    @abstractmethod
-    def remove_item(self) -> bool:
+    def remove_item(self, item_id) -> bool:
+        # delete row where item_id = x
         pass
 
+    @abstractmethod
+    def update_item(self) -> bool:
+        # update item fields with given values of args
+        pass
