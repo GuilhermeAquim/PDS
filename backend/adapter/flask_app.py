@@ -2,12 +2,15 @@ from flask import Flask, request, jsonify
 from domain.ports import *
 from flask_expects_json import expects_json
 from adapter.flask_schemas import *
+
+
 class FlaskApp:
-    def __init__(self, auth_rep : AuthRepository, user_rep: UserRepository) -> None:
+    def __init__(self, auth_rep : AuthRepository, user_rep: UserRepository, sale_rep : SaleRepository) -> None:
         self._app = Flask(__name__)
         
         self._auth_rep = auth_rep
         self._user_rep = user_rep
+        self._sale_rep = sale_rep
         
         self.__setup_routes()
         
@@ -47,7 +50,7 @@ class FlaskApp:
         @self._app.route('/user/remove', methods=['POST'])
         def remove_user():
             # todo
-            raise NotImplementedError 
+            raise NotImplementedError
 
         @self._app.route('/proposal/list', methods=['POST'])
         def list_proposals():
@@ -81,9 +84,30 @@ class FlaskApp:
         
         @self._app.route('/sales/list', methods=['GET'])
         def list_sales():
-            # todo 
-            raise NotImplementedError
+            request
+            item_id = request.args.get('item_id')
+            name = request.args.get('name')
+            
+            items = self._sale_rep.search_sale(item_id=item_id, name=name)
+            
+            return jsonify({'count': len(items), 'items' : items})
         
+        @self._app.route('/sales/create', methods=['POST'])
+        @expects_json(CREATE_SALE_SCHEMA)
+        def create_sale():
+            payload = request.json
+            
+            try:
+                self._sale_rep.sell_item(
+                    item_id=payload.get('item_id'),
+                    sale_price=payload.get('sale_price'),
+                    sale_annotation = payload.get('sale_annotation'),
+                    sale_user_id = payload.get('sale_user_id'),
+                )
+                return jsonify({'success': True})
+            except (UserNotExists, ItemNotExists) as exc:
+                return jsonify({'error' : exc.args[0]}), 404
+            
     def run(self):
         self._app.run(host='localhost', port=5050)
         
