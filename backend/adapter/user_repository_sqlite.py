@@ -1,7 +1,6 @@
 from domain.ports.user_repository import UserRepository, UserNotFoundError, UserAlreadyExists
 from domain.entities.user import User
 from adapter.base_sqlite import BaseSQLite
-import sqlite3
 
 
 class UserRepositorySQLite(BaseSQLite, UserRepository):

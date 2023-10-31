@@ -1,6 +1,9 @@
 from abc import abstractmethod, ABC
 from domain.entities.user import Item
 
+class ItemNotFound(Exception):
+    pass
+
 class ItemRepository(ABC):
     @abstractmethod
     def search_item(self, name = None, item_id = None) -> list[Item]:
