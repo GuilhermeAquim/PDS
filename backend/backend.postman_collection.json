@@ -212,6 +212,201 @@
 				"description": "Realiza o login e devolve, em caso de sucesso, um token para validar as demais operações."
 			},
 			"response": []
+		},
+		{
+			"name": "List sales",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "Inform sale",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"item_id\": 50000,\r\n    \"sale_price\" : 10.0,\r\n    \"sale_annotation\": \"sold to john\",\r\n    \"sale_user_id\": 2\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{api_uri}}/sales/create",
+					"host": [
+						"{{api_uri}}"
+					],
+					"path": [
+						"sales",
+						"create"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Success",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"item_id\": 5,\r\n    \"sale_price\" : 10.0,\r\n    \"sale_annotation\": \"sold to john\",\r\n    \"sale_user_id\": 2\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_uri}}/sales/create",
+							"host": [
+								"{{api_uri}}"
+							],
+							"path": [
+								"sales",
+								"create"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Server",
+							"value": "Werkzeug/2.2.2 Python/3.10.9"
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 31 Oct 2023 01:46:58 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Content-Length",
+							"value": "17"
+						},
+						{
+							"key": "Connection",
+							"value": "close"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"success\": true\n}"
+				},
+				{
+					"name": "Fail (user not exists)",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"item_id\": 5,\r\n    \"sale_price\" : 10.0,\r\n    \"sale_annotation\": \"sold to john\",\r\n    \"sale_user_id\": 3\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_uri}}/sales/create",
+							"host": [
+								"{{api_uri}}"
+							],
+							"path": [
+								"sales",
+								"create"
+							]
+						}
+					},
+					"status": "NOT FOUND",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Server",
+							"value": "Werkzeug/2.2.2 Python/3.10.9"
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 31 Oct 2023 01:47:09 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Content-Length",
+							"value": "31"
+						},
+						{
+							"key": "Connection",
+							"value": "close"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"error\": \"User 3 not exists.\"\n}"
+				},
+				{
+					"name": "Fail (item not exists)",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"item_id\": 50000,\r\n    \"sale_price\" : 10.0,\r\n    \"sale_annotation\": \"sold to john\",\r\n    \"sale_user_id\": 2\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_uri}}/sales/create",
+							"host": [
+								"{{api_uri}}"
+							],
+							"path": [
+								"sales",
+								"create"
+							]
+						}
+					},
+					"status": "NOT FOUND",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Server",
+							"value": "Werkzeug/2.2.2 Python/3.10.9"
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 31 Oct 2023 01:47:36 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Content-Length",
+							"value": "35"
+						},
+						{
+							"key": "Connection",
+							"value": "close"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"error\": \"Item 50000 not exists.\"\n}"
+				}
+			]
 		}
 	],
 	"event": [
