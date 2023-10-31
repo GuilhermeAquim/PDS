@@ -3,11 +3,12 @@ from domain.ports import *
 from flask_expects_json import expects_json
 from adapter.flask_schemas import *
 class FlaskApp:
-    def __init__(self, auth_rep : AuthRepository, user_rep: UserRepository) -> None:
+    def __init__(self, auth_rep : AuthRepository, user_rep: UserRepository, sale_rep : SaleRepository) -> None:
         self._app = Flask(__name__)
         
         self._auth_rep = auth_rep
         self._user_rep = user_rep
+        self._sale_rep = sale_rep
         
         self.__setup_routes()
         
@@ -81,8 +82,12 @@ class FlaskApp:
         
         @self._app.route('/sales/list', methods=['GET'])
         def list_sales():
-            # todo 
-            raise NotImplementedError
+            item_id = request.args.get('item_id')
+            name = request.args.get('name')
+            
+            items = self._sale_rep.search_sale(item_id=item_id, name=name)
+            
+            return jsonify({'count': len(items), 'items' : items})
         
     def run(self):
         self._app.run(host='localhost', port=5050)
