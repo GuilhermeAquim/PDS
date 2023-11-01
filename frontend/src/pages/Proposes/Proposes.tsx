@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { VehicleCard } from "../../shared/components/VehicleCard/VehicleCard";
 import { ProposesContainer, ProposesListContainer } from "./Proposes.styles";
 import { ApprovalDialog } from "../../shared/components/ApprovalDialog/ApprovalDialog";
-import { DisapprovalDialog } from "../../shared/components/DispprovalDialog/DisapprovalDialog";
+import { ConfirmationDialog } from "../../shared/components/ConfirmationDialog/ConfirmationDialog";
 
 export const Proposes = (): JSX.Element => {
   const [filter, setFilter] = useState("");
@@ -67,9 +67,24 @@ export const Proposes = (): JSX.Element => {
         onClose={() => setApprovalDialogOpen(false)}
         vehicle={{}}
       />
-      <DisapprovalDialog
+      <ConfirmationDialog
         open={disapprovalDialogOpen}
         onClose={() => setDisapprovalDialogOpen(false)}
+        title="Reprovar Proposta"
+        text="Tem certeza que deseja reprovar a proposta do veículo X? A ação não pode ser desfeita."
+        actions={
+          <>
+            <Button variant="outlined" style={{ marginRight: 16 }}>
+              Reprovar
+            </Button>
+            <Button
+              variant="contained"
+              onClick={() => setDisapprovalDialogOpen(false)}
+            >
+              Cancelar
+            </Button>
+          </>
+        }
       />
     </ProposesContainer>
   );

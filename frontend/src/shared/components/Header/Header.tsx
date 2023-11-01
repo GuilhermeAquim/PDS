@@ -22,12 +22,13 @@ export const Header = (): JSX.Element => {
         <HeaderAction onClick={() => navigate("/stock")}>
           <Typography>Estoque</Typography>
         </HeaderAction>
+        {/* TODO: Inverter condição */}
         {!loggedInUser?.admin && (
           <>
             <HeaderAction onClick={() => navigate("/proposes")}>
               <Typography>Propostas</Typography>
             </HeaderAction>
-            <HeaderAction>
+            <HeaderAction onClick={() => navigate("/users")}>
               <Typography>Usuários</Typography>
             </HeaderAction>
           </>

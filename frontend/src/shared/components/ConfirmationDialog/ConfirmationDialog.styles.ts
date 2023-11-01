@@ -1,30 +1,31 @@
 import styled from "@emotion/styled";
 import { Modal } from "@mui/material";
 
-export const DisapprovalDialogContainer = styled(Modal)(() => ({
+export const ConfirmationDialogContainer = styled(Modal)(() => ({
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
 }));
 
-export const DisapprovalDialogHeader = styled("div")(() => ({
+export const ConfirmationDialogHeader = styled("div")(() => ({
   display: "flex",
   justifyContent: "space-between",
   alignItems: "center",
 }));
 
-export const DisapprovalDialogContent = styled("div")(() => ({
+export const ConfirmationDialogContent = styled("div")(() => ({
   backgroundColor: "#FFF",
   width: 300,
   padding: 16,
   overflow: "auto",
+  borderRadius: 16,
 }));
 
-export const DisapprovalDialogMessage = styled("div")(() => ({
+export const ConfirmationDialogMessage = styled("div")(() => ({
   margin: "16px 0",
 }));
 
-export const DisapprovalDialogActions = styled("div")(() => ({
+export const ConfirmationDialogActions = styled("div")(() => ({
   display: "flex",
   justifyContent: "flex-end",
 }));

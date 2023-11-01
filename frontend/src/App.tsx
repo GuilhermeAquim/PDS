@@ -4,6 +4,7 @@ import { Stock } from "./pages/Stock/Stock";
 import { VehiclePage } from "./pages/VehiclePage/VehiclePage";
 import { Header } from "./shared/components/Header/Header";
 import { Proposes } from "./pages/Proposes/Proposes";
+import { UsersPage } from "./pages/UsersPage/UsersPage";
 
 function App() {
   return (
@@ -36,6 +37,15 @@ function App() {
               <>
                 <Header />
                 <Proposes />
+              </>
+            }
+          />
+          <Route
+            path="/users"
+            element={
+              <>
+                <Header />
+                <UsersPage />
               </>
             }
           />

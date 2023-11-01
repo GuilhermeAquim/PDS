@@ -18,6 +18,7 @@ export const ApprovalDialogContent = styled("div")(() => ({
   width: 600,
   padding: 16,
   overflow: "auto",
+  borderRadius: 16,
 }));
 
 export const ApprovalImageContainer = styled("div")(() => ({
