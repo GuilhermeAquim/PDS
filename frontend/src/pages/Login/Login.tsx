@@ -8,18 +8,29 @@ import {
 } from "./Login.styles";
 import { useNavigate } from "react-router-dom";
 import UserManager from "../../services/user/User.manager";
+import { useAppDispatch } from "../../hooks/reduxHooks";
+import { setLoggedInUser } from "../../redux/usersSlice";
+import { openSnackbar } from "../../redux/snackbarSlice";
 
 export const Login = (): JSX.Element => {
   const navigate = useNavigate();
+
+  const dispatch = useAppDispatch();
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
   const handleLoginClick = async () => {
     try {
-      await UserManager.authUser(username, password);
+      const user = await UserManager.authUser(username, password);
+
+      if (!user) return;
+
+      dispatch(setLoggedInUser(user));
       navigate("/stock");
-    } catch {}
+    } catch {
+      dispatch(openSnackbar({ message: "Erro ao fazer login", type: "error" }));
+    }
   };
 
   return (

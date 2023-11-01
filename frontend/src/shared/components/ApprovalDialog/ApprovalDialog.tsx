@@ -10,11 +10,15 @@ import {
 } from "./ApprovalDialog.styles";
 import CloseIcon from "@mui/icons-material/Close";
 import { useState } from "react";
+import { Vehicle } from "../../types/Vehicle";
+import { useAppDispatch, useAppSelector } from "../../../hooks/reduxHooks";
+import { addVehicle, setProposals } from "../../../redux/vehiclesSlice";
+import { openSnackbar } from "../../../redux/snackbarSlice";
 
 type Props = {
   open: boolean;
   onClose: () => void;
-  vehicle: any;
+  vehicle: Vehicle;
 };
 
 export const ApprovalDialog = ({
@@ -22,13 +26,35 @@ export const ApprovalDialog = ({
   onClose,
   vehicle,
 }: Props): JSX.Element => {
+  const dispatch = useAppDispatch();
+  const { proposals } = useAppSelector((state) => state.vehicles);
+
   const [minValue, setMinValue] = useState("");
+
+  const handleApprove = () => {
+    const newVehicle: Vehicle = {
+      ...vehicle,
+      salePrice: +minValue,
+    };
+
+    const updatedProposals = proposals.filter((p) => p.name !== vehicle.name);
+
+    dispatch(
+      openSnackbar({
+        message: "Proposta aprovada com sucesso",
+        type: "success",
+      })
+    );
+    dispatch(addVehicle(newVehicle));
+    dispatch(setProposals(updatedProposals));
+    onClose();
+  };
 
   return (
     <ApprovalDialogContainer open={open} onClose={onClose}>
       <ApprovalDialogContent>
         <ApprovalDialogHeader>
-          <Typography variant="h6">Gol 1.8 GTS 8V</Typography>
+          <Typography variant="h6">{vehicle.name}</Typography>
           <IconButton onClick={onClose}>
             <CloseIcon />
           </IconButton>
@@ -41,10 +67,9 @@ export const ApprovalDialog = ({
             />
           </ApprovalImageContainer>
           <div>
-            <Typography>Motor: 1.8 8V</Typography>
-            <Typography>Ano: 2000</Typography>
-            <Typography>Cor: Vermelho</Typography>
-            <Typography>Informações: - </Typography>
+            <Typography>Ano: {vehicle.year}</Typography>
+            <Typography>Cor: {vehicle.color}</Typography>
+            <Typography>Preço: {vehicle.purchasePrice}</Typography>
           </div>
           <ApprovalInputContainer>
             <TextField
@@ -56,7 +81,12 @@ export const ApprovalDialog = ({
             />
           </ApprovalInputContainer>
           <ApprovalActionsContainer>
-            <Button variant="contained" style={{ marginRight: 16 }}>
+            <Button
+              variant="contained"
+              style={{ marginRight: 16 }}
+              onClick={handleApprove}
+              disabled={!minValue}
+            >
               Aprovar
             </Button>
             <Button variant="outlined" onClick={onClose}>
