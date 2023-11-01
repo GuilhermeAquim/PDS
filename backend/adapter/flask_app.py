@@ -18,6 +18,8 @@ class FlaskApp:
         
     def __validate_token(self, token):
         try:
+            if token is None:
+                raise AuthenticationError
             return self._auth_rep.validate_token(token)
         except AuthenticationError as exc:
             return jsonify({'message' : exc.args[0]}), 401
