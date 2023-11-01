@@ -76,7 +76,6 @@ class FlaskApp:
                     payload.get('year'),
                     payload.get('color'),
                     payload.get('manufacturer'),
-                    payload.get('proposed_date'),
                     payload.get('proposal_user_id'),
                     payload.get('annotation'),
                     payload.get('purchase_price'),

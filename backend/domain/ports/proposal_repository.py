@@ -10,7 +10,7 @@ class ProposalRepository(ABC):
         pass
     
     @abstractmethod
-    def create_proposal(self, name, icon, year, color, manufacturer, annotation, purchase_price) -> int:
+    def create_proposal(self, name, icon, year, color, manufacturer, proposed_date, proposal_user_id, annotation, purchase_price, sale_price, sale_user_id) -> int:
         # create a new item with proposal info
         pass
     
