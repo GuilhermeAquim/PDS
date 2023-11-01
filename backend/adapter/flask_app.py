@@ -43,9 +43,11 @@ class FlaskApp:
         @expects_json(CREATE_USER_SCHEMA)
         def create_user():
             payload = request.json
-            token = request.headers.get('session_token')
+            token = request.headers.get('Session-Token')
             new_user_data = payload['new_user']
             validated_token = self.__validate_token(token)
+            if isinstance(validated_token, tuple):
+                return validated_token
             
             try:
                 creation = self._user_rep.create_user(
@@ -56,17 +58,19 @@ class FlaskApp:
                 )
                 return jsonify({'created_user_id': creation})
             except PermissionError:
-                return jsonify({'message' : 'User does not have acces to create new users.'}), 401
-
+                return jsonify({'message' : 'User does not have access to create new users.'}), 401
+            except UserAlreadyExists:
+                return jsonify({'message': 'User already exists.'}), 403
                 
         @self._app.route('/user/remove', methods=['POST'])
         @expects_json(REMOVE_USER_SCHEMA)
         def remove_user():
             payload = request.json
             to_remove_user_id = payload.get('user_id')
-            token = request.headers.get('session_token')
+            token = request.headers.get('Session-Token')
             validated_token = self.__validate_token(token)
-            
+            if isinstance(validated_token, tuple):
+                return validated_token
             try:
                 session_user_id = validated_token.get('user_id')
                 self._user_rep.remove_user(session_user_id=session_user_id, 
@@ -79,8 +83,10 @@ class FlaskApp:
         def search_proposal():
             item_id = request.args.get('item_id')
             name = request.args.get('name')
-            token = request.headers.get('session_token')
+            token = request.headers.get('Session-Token')
             validated_token = self.__validate_token(token)
+            if isinstance(validated_token, tuple):
+                return validated_token
             
             proposals = self._proposal_rep.search_proposal(item_id=item_id, name=name)
             
@@ -90,8 +96,10 @@ class FlaskApp:
         @expects_json(CREATE_PROPOSAL_SCHEMA)
         def create_proposal():
             payload = request.json
-            token = request.headers.get('session_token')
+            token = request.headers.get('Session-Token')
             validated_token = self.__validate_token(token)
+            if isinstance(validated_token, tuple):
+                return validated_token
             
             try:
                 self._proposal_rep.create_proposal(
@@ -113,8 +121,10 @@ class FlaskApp:
         @self._app.route('/proposal/deny', methods=['POST'])
         def deny_proposal():
             payload = request.json
-            token = request.headers.get('session_token')
-            self.__validate_token(token)
+            token = request.headers.get('Session-Token')
+            validated_token = self.__validate_token(token)
+            if isinstance(validated_token, tuple):
+                return validated_token
             
             try:
                 self._proposal_rep.deny_proposal(item_id=payload.get('item_id'))
@@ -125,8 +135,10 @@ class FlaskApp:
         @self._app.route('/proposal/approve', methods=['POST'])
         def approve_proposal():
             payload = request.json
-            token = request.headers.get('session_token')
-            self.__validate_token(token)
+            token = request.headers.get('Session-Token')
+            validated_token = self.__validate_token(token)
+            if isinstance(validated_token, tuple):
+                return validated_token
             
             try:
                 self._proposal_rep.approve_proposal(item_id=payload.get('item_id'))
@@ -137,8 +149,10 @@ class FlaskApp:
         @self._app.route('/proposal/update', methods=['POST'])
         def update_proposal():
             payload = request.json
-            token = request.headers.get('session_token')
-            self.__validate_token(token)
+            token = request.headers.get('Session-Token')
+            validated_token = self.__validate_token(token)
+            if isinstance(validated_token, tuple):
+                return validated_token
             
             try:
                 self._proposal_rep.update_proposal(
@@ -161,8 +175,11 @@ class FlaskApp:
         
         @self._app.route('/item/search', methods=['GET'])
         def search_item():
-            token = request.headers.get('session_token')
-            self.__validate_token(token)
+            token = request.headers.get('Session-Token')
+            validated_token = self.__validate_token(token)
+            if isinstance(validated_token, tuple):
+                return validated_token
+            
             item_id = request.args.get('item_id')
             name = request.args.get('name')
             
@@ -172,8 +189,11 @@ class FlaskApp:
         
         @self._app.route('/item/remove', methods=['POST'])
         def remove_item():
-            token = request.headers.get('session_token')
-            self.__validate_token(token)
+            token = request.headers.get('Session-Token')
+            validated_token = self.__validate_token(token)
+            if isinstance(validated_token, tuple):
+                return validated_token
+            
             payload = request.json
             try:
                 self._item_rep.remove_item(item_id=payload.get('item_id'))
@@ -184,8 +204,10 @@ class FlaskApp:
         @self._app.route('/item/update', methods=['POST'])
         def update_item():
             payload = request.json
-            token = request.headers.get('session_token')
-            self.__validate_token(token)
+            token = request.headers.get('Session-Token')
+            validated_token = self.__validate_token(token)
+            if isinstance(validated_token, tuple):
+                return validated_token
             
             try:
                 self._item_rep.update_item(
@@ -211,8 +233,10 @@ class FlaskApp:
         
         @self._app.route('/sales/list', methods=['GET'])
         def list_sales():
-            token = request.headers.get('session_token')
-            self.__validate_token(token)
+            token = request.headers.get('Session-Token')
+            validated_token = self.__validate_token(token)
+            if isinstance(validated_token, tuple):
+                return validated_token
             
             item_id = request.args.get('item_id')
             name = request.args.get('name')
@@ -224,8 +248,11 @@ class FlaskApp:
         @self._app.route('/sales/create', methods=['POST'])
         @expects_json(CREATE_SALE_SCHEMA)
         def create_sale():
-            token = request.headers.get('session_token')
-            self.__validate_token(token)
+            token = request.headers.get('Session-Token')
+            validated_token = self.__validate_token(token)
+            if isinstance(validated_token, tuple):
+                return validated_token
+            
             payload = request.json
             
             try:
