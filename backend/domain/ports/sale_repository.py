@@ -20,3 +20,8 @@ class SaleRepository(ABC):
         # set item sold = 1 and all others sale fields from item
         # return True if succeed
         pass
+
+    @abstractmethod
+    def get_sell_price_suggestion(self, item_id) -> float:
+        # return a suggestion of sale price based on item purchase price and all expenses
+        pass

@@ -308,6 +308,19 @@ class FlaskApp:
             except (UserNotExists, ItemNotExists) as exc:
                 return jsonify({'error' : exc.args[0]}), 404
             
+        @self._app.route('/sales/suggestion', methods=['GET'])
+        def get_sell_price_suggestion():
+            token = request.headers.get('Session-Token')
+            validated_token = self.__validate_token(token)
+            if isinstance(validated_token, tuple):
+                return validated_token
+            
+            item_id = request.args.get('item_id')
+            
+            price = self._sale_rep.get_sell_price_suggestion(item_id=item_id)
+            
+            return jsonify({'suggested_price': price})
+            
     def run(self):
         self._app.run(host='localhost', port=5050)
         
