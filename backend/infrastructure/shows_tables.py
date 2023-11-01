@@ -15,3 +15,6 @@ print(pd.read_sql_query('SELECT * FROM items WHERE approved IS NULL', conn))
 
 print('\nSALES')
 print(pd.read_sql_query('SELECT * FROM items WHERE sold = 1', conn))
+
+print('\nEXPENSES')
+print(pd.read_sql_query('SELECT * FROM expenses', conn))
