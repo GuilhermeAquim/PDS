@@ -35,7 +35,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"login\": \"admin\",\r\n    \"password\": \"hashed_password\"\r\n}",
+					"raw": "{\r\n    \"login\": \"admin\",\r\n    \"password\": \"senha\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -69,12 +69,10 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:5050/login",
-							"protocol": "http",
+							"raw": "{{api_uri}}/login",
 							"host": [
-								"localhost"
+								"{{api_uri}}"
 							],
-							"port": "5050",
 							"path": [
 								"login"
 							]
@@ -214,10 +212,139 @@
 			"response": []
 		},
 		{
-			"name": "List sales",
+			"name": "Remove user",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "session_token",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"user_id\" : 2\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{api_uri}}/user/remove",
+					"host": [
+						"{{api_uri}}"
+					],
+					"path": [
+						"user",
+						"remove"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Approve Proposal",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "session_token",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"item_id\": 2\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{api_uri}}/proposal/approve",
+					"host": [
+						"{{api_uri}}"
+					],
+					"path": [
+						"proposal",
+						"approve"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Remove item",
 			"request": {
 				"method": "GET",
 				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "Update item",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "session_token",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"item_id\": 1,\r\n    \"year\": 1999,\r\n    \"icon\": \"foo\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{api_uri}}/item/update",
+					"host": [
+						"{{api_uri}}"
+					],
+					"path": [
+						"item",
+						"update"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "List sales",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "session_token",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{api_uri}}/sales/list?name=4",
+					"host": [
+						"{{api_uri}}"
+					],
+					"path": [
+						"sales",
+						"list"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "4"
+						}
+					]
+				}
 			},
 			"response": []
 		},
