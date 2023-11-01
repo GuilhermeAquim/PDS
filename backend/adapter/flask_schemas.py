@@ -56,7 +56,7 @@ CREATE_PROPOSAL_SCHEMA = {
 CREATE_EXPENSE_SCHEMA = {
     "type" : "object",
     "properties" : {
-        "expense_date" : {"type": "string"},
+        "expense_register_date" : {"type": "string"},
         "expense_annotation" : {"type": "string"},
         "item_id" : {"type": "number"},
         "expense_price" : {"type": "number"},

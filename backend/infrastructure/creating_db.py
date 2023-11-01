@@ -25,6 +25,8 @@ cursor.execute("""
         admin INTEGER
     )
 """)
+
+# ITEMS TABLE
 cursor.execute("""
     CREATE TABLE items (
         id INTEGER PRIMARY KEY,
@@ -47,6 +49,21 @@ cursor.execute("""
         
         FOREIGN KEY (sale_user_id) REFERENCES users (id),
         FOREIGN KEY (proposal_user_id) REFERENCES users (id) 
+    )
+""")
+
+# EXPENSES TABLE
+cursor.execute("""
+    CREATE TABLE expenses (
+        id INTEGER PRIMARY KEY,
+        expense_register_date DATETIME NOT NULL,
+        expense_annotation INTEGER NOT NULL,
+        item_id INTEGER NOT NULL,
+        expense_price REAL NOT NULL,
+        expense_register_user_id INTEGER NOT NULL,
+        
+        FOREIGN KEY (item_id) REFERENCES items (id),
+        FOREIGN KEY (expense_register_user_id) REFERENCES users (id) 
     )
 """)
 
