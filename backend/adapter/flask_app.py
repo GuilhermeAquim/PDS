@@ -2,11 +2,13 @@ from flask import Flask, request, jsonify
 from domain.ports import *
 from flask_expects_json import expects_json
 from adapter.flask_schemas import *
+from flask_cors import CORS
 
 
 class FlaskApp:
     def __init__(self, auth_rep : AuthRepository, user_rep: UserRepository, sale_rep : SaleRepository, item_rep : ItemRepository, proposal_rep : ProposalRepository) -> None:
         self._app = Flask(__name__)
+        CORS(self._app)
         
         self._auth_rep = auth_rep
         self._user_rep = user_rep

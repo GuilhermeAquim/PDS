@@ -2,3 +2,4 @@ Flask
 pyjwt
 flask-expects-json
 pandas
+flask-cors
