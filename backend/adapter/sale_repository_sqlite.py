@@ -27,7 +27,7 @@ class SaleRepositorySQLite(BaseSQLite, SaleRepository):
         query = f""" SELECT id FROM items WHERE id = ? LIMIT 1"""
         row = self.select_data(query,args=(item_id,), fetchone=True)
         if not row:
-            raise ItemNotExists(f'Item {item_id} not exists.')
+            raise ItemNotExists(f'Sale {item_id} not exists.')
         
         query = f""" SELECT id FROM users WHERE id = ? LIMIT 1"""
         row = self.select_data(query, args=(sale_user_id,), fetchone=True)
