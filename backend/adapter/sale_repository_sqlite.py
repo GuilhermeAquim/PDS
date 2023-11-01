@@ -13,9 +13,9 @@ class SaleRepositorySQLite(BaseSQLite, SaleRepository):
             SELECT * FROM items WHERE sold = 1
         """
         if item_id:
-            query += f"AND item_id = {item_id}"
+            query += f" AND item_id = {item_id}"
         if name:
-            query += f"AND name LIKE '%{name}%'"
+            query += f" AND name LIKE '%{name}%'"
         
         rows = self.select_data(query)
         if rows:
@@ -45,3 +45,16 @@ class SaleRepositorySQLite(BaseSQLite, SaleRepository):
                 id = {item_id}
         """
         self.update_data(query)
+
+    def get_sell_price_suggestion(self, item_id):
+        query = f""" SELECT purchase_price FROM items WHERE id = ? LIMIT 1"""
+        row = self.select_data(query, args=(item_id,), fetchone=True)
+        if not row:
+            raise ItemNotExists(f'Item {item_id} not exists.')
+        price = row[0]
+
+        query = f""" SELECT expense_price FROM expenses WHERE item_id = ?"""
+        rows = self.select_data(query, args=(item_id,))
+        if rows:
+            price =+ sum([row[0] for row in rows])
+            return price
