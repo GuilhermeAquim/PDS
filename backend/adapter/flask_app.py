@@ -91,7 +91,7 @@ class FlaskApp:
         def create_proposal():
             payload = request.json
             token = request.headers.get('session_token')
-            self.__validate_token(token)
+            validated_token = self.__validate_token(token)
             
             try:
                 self._proposal_rep.create_proposal(
@@ -100,7 +100,7 @@ class FlaskApp:
                     payload.get('year'),
                     payload.get('color'),
                     payload.get('manufacturer'),
-                    payload.get('proposal_user_id'),
+                    validated_token.get('user_id'),
                     payload.get('annotation'),
                     payload.get('purchase_price'),
                     payload.get('sale_price'),
