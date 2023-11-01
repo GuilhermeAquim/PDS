@@ -17,3 +17,9 @@ export const HeaderAction = styled("div")(() => ({
   margin: "0 16px",
   cursor: "pointer",
 }));
+
+export const HeaderLogoContainer = styled("div")(() => ({
+  display: "flex",
+  alignItems: "center",
+  marginLeft: 16,
+}));

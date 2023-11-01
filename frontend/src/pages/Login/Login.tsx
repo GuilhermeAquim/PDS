@@ -7,6 +7,7 @@ import {
   LoginUsernameInput,
 } from "./Login.styles";
 import { useNavigate } from "react-router-dom";
+import UserManager from "../../services/user/User.manager";
 
 export const Login = (): JSX.Element => {
   const navigate = useNavigate();
@@ -14,8 +15,11 @@ export const Login = (): JSX.Element => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleLoginClick = () => {
-    navigate("/stock");
+  const handleLoginClick = async () => {
+    try {
+      await UserManager.authUser(username, password);
+      navigate("/stock");
+    } catch {}
   };
 
   return (

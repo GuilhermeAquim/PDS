@@ -5,9 +5,13 @@ import {
   VehiclePageContent,
   VehiclePageHeader,
 } from "./VehiclePage.styles";
+import { SellVehicleDialog } from "../../shared/components/SellVehicleDialog/SellVehicleDialog";
+import { useState } from "react";
 
 export const VehiclePage = (): JSX.Element => {
   const navigate = useNavigate();
+
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   return (
     <div>
@@ -30,10 +34,17 @@ export const VehiclePage = (): JSX.Element => {
           <Typography variant="h6">Cor: Vermelho</Typography>
           <Typography variant="h6">Informações: - </Typography>
           <div style={{ display: "flex", justifyContent: "center" }}>
-            <Button variant="contained">Confirmar Venda</Button>
+            <Button variant="contained" onClick={() => setIsDialogOpen(true)}>
+              Confirmar Venda
+            </Button>
           </div>
         </div>
       </VehiclePageContent>
+      <SellVehicleDialog
+        open={isDialogOpen}
+        onClose={() => setIsDialogOpen(false)}
+        vehicle={{}}
+      />
     </div>
   );
 };

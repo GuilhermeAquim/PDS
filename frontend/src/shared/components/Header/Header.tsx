@@ -1,20 +1,37 @@
 import { Typography } from "@mui/material";
-import { HeaderAction, HeaderActions, HeaderContainer } from "./Header.styles";
+import {
+  HeaderAction,
+  HeaderActions,
+  HeaderContainer,
+  HeaderLogoContainer,
+} from "./Header.styles";
+import { useAppSelector } from "../../../hooks/reduxHooks";
+import { useNavigate } from "react-router-dom";
 
 export const Header = (): JSX.Element => {
+  const navigate = useNavigate();
+
+  const { loggedInUser } = useAppSelector((state) => state.users);
+
   return (
     <HeaderContainer>
-      <div></div>
+      <HeaderLogoContainer>
+        <Typography variant="h4">SGNV</Typography>
+      </HeaderLogoContainer>
       <HeaderActions>
-        <HeaderAction>
+        <HeaderAction onClick={() => navigate("/stock")}>
           <Typography>Estoque</Typography>
         </HeaderAction>
-        <HeaderAction>
-          <Typography>Propostas</Typography>
-        </HeaderAction>
-        <HeaderAction>
-          <Typography>Usuários</Typography>
-        </HeaderAction>
+        {loggedInUser?.admin && (
+          <>
+            <HeaderAction>
+              <Typography>Propostas</Typography>
+            </HeaderAction>
+            <HeaderAction>
+              <Typography>Usuários</Typography>
+            </HeaderAction>
+          </>
+        )}
         <HeaderAction>
           <Typography>Relatórios</Typography>
         </HeaderAction>
