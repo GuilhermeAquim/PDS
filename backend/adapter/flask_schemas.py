@@ -53,6 +53,18 @@ CREATE_PROPOSAL_SCHEMA = {
     "required": ["name", "purchase_price"]
 }
 
+CREATE_EXPENSE_SCHEMA = {
+    "type" : "object",
+    "properties" : {
+        "expense_date" : {"type": "string"},
+        "expense_annotation" : {"type": "string"},
+        "item_id" : {"type": "number"},
+        "expense_price" : {"type": "number"},
+        "expense_register_user_id" : {"type": "number"}  
+    },
+    "required": ["expense_annotation", "item_id", "expense_price", "expense_register_user_id"]
+}
+
 REMOVE_USER_SCHEMA = {
     "type" : "object",
     "properties" : {

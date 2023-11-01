@@ -5,6 +5,7 @@ from datetime import datetime
 class Expense:
     id_: int
     expense_date: datetime
-    description: str
+    expense_annotation: str
     item_id: int
-    register_user_id: int
+    expense_price: float
+    expense_register_user_id: int
