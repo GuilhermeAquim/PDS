@@ -17,7 +17,7 @@ class UserRepositorySQLite(BaseSQLite, UserRepository):
         
         try:
             self.get_user_by_login(login)
-            raise UserAlreadyExists() 
+            raise UserAlreadyExists(f'User {login} already exists.') 
         except UserNotFoundError:
             pass
             
