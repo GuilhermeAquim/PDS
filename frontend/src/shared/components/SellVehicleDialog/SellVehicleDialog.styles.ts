@@ -18,3 +18,25 @@ export const SellVehicleDialogContent = styled("div")(() => ({
   padding: 16,
   overflow: "auto",
 }));
+
+export const SellVehicleImageContainer = styled("div")(() => ({
+  margin: "24px 0",
+}));
+
+export const SellVehicleImage = styled("img")(() => ({
+  maxWidth: "100%",
+  borderRadius: 16,
+}));
+
+export const SellVehicleFormContainer = styled("div")(() => ({
+  display: "grid",
+  gridTemplateColumns: "1fr 1fr",
+  columnGap: 32,
+  rowGap: 24,
+}));
+
+export const SellVehicleActionsContainer = styled("div")(() => ({
+  display: "flex",
+  justifyContent: "flex-end",
+  marginTop: 24,
+}));

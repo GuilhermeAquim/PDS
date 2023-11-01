@@ -1,7 +1,11 @@
 import {
+  SellVehicleActionsContainer,
   SellVehicleDialogContainer,
   SellVehicleDialogContent,
   SellVehicleDialogHeader,
+  SellVehicleFormContainer,
+  SellVehicleImage,
+  SellVehicleImageContainer,
 } from "./SellVehicleDialog.styles";
 import CloseIcon from "@mui/icons-material/Close";
 import { Button, IconButton, TextField, Typography } from "@mui/material";
@@ -29,21 +33,13 @@ export const SellVehicleDialog = ({ vehicle, open, onClose }: Props) => {
           </IconButton>
         </SellVehicleDialogHeader>
         <div>
-          <div style={{ margin: "24px 0" }}>
-            <img
+          <SellVehicleImageContainer>
+            <SellVehicleImage
               src="https://cdn.autopapo.com.br/box/uploads/2022/12/12165820/han-byd-carros-chineses-portal-732x488.jpg"
               alt=""
-              style={{ maxWidth: "100%", borderRadius: 16 }}
             />
-          </div>
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "1fr 1fr",
-              columnGap: 32,
-              rowGap: 24,
-            }}
-          >
+          </SellVehicleImageContainer>
+          <SellVehicleFormContainer>
             <TextField
               value={value}
               onChange={(e) => setValue(e.target.value)}
@@ -70,18 +66,16 @@ export const SellVehicleDialog = ({ vehicle, open, onClose }: Props) => {
               variant="outlined"
               label="Email"
             />
-          </div>
+          </SellVehicleFormContainer>
         </div>
-        <div
-          style={{ display: "flex", justifyContent: "flex-end", marginTop: 24 }}
-        >
+        <SellVehicleActionsContainer>
           <Button variant="contained" style={{ marginRight: 16 }}>
             Confirmar
           </Button>
           <Button onClick={onClose} variant="outlined">
             Cancelar
           </Button>
-        </div>
+        </SellVehicleActionsContainer>
       </SellVehicleDialogContent>
     </SellVehicleDialogContainer>
   );

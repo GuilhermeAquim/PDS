@@ -2,6 +2,7 @@ import { Button, IconButton, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import {
   ArrowBackIcon,
+  VehiclePageActionContainer,
   VehiclePageContent,
   VehiclePageHeader,
 } from "./VehiclePage.styles";
@@ -33,11 +34,11 @@ export const VehiclePage = (): JSX.Element => {
           <Typography variant="h6">Ano: 2000</Typography>
           <Typography variant="h6">Cor: Vermelho</Typography>
           <Typography variant="h6">Informações: - </Typography>
-          <div style={{ display: "flex", justifyContent: "center" }}>
+          <VehiclePageActionContainer>
             <Button variant="contained" onClick={() => setIsDialogOpen(true)}>
               Confirmar Venda
             </Button>
-          </div>
+          </VehiclePageActionContainer>
         </div>
       </VehiclePageContent>
       <SellVehicleDialog

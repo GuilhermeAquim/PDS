@@ -22,9 +22,9 @@ export const Header = (): JSX.Element => {
         <HeaderAction onClick={() => navigate("/stock")}>
           <Typography>Estoque</Typography>
         </HeaderAction>
-        {loggedInUser?.admin && (
+        {!loggedInUser?.admin && (
           <>
-            <HeaderAction>
+            <HeaderAction onClick={() => navigate("/proposes")}>
               <Typography>Propostas</Typography>
             </HeaderAction>
             <HeaderAction>
