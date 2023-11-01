@@ -20,3 +20,6 @@ class Item:
     sale_date: datetime
     sale_annotation: str
     sale_user_id: int
+
+    def get_suggested_price(self, expenses):
+        return (self.purchase_price + sum([i[0] for i in expenses])) * 1.5
