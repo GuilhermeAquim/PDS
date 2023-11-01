@@ -8,4 +8,10 @@ print('USERS:')
 print(pd.read_sql_query('SELECT * FROM users', conn))
 
 print('\nITEMS')
-print(pd.read_sql_query('SELECT * FROM items', conn))
+print(pd.read_sql_query('SELECT * FROM items WHERE sold != 0 and approved = 1', conn))
+
+print('\nPROPOSALS')
+print(pd.read_sql_query('SELECT * FROM items WHERE approved IS NULL', conn))
+
+print('\nSALES')
+print(pd.read_sql_query('SELECT * FROM items WHERE sold = 1', conn))
