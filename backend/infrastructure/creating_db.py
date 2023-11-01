@@ -1,18 +1,18 @@
 import sqlite3
 import os
 
-DB_PATH = r'infrastructure/database.db'
+DB_PATH = os.path.join('infrastructure', 'database.db')
 
 if os.path.isfile(DB_PATH):
     choice = input('DB already exists. Do you want do recreate? (All data will be lost) [y/n]: ')
     if choice not in ['y', 'yes', 'Yes']:
         exit(0)
 
+    os.remove(DB_PATH)
     print('Recreating DB...')
 else:
     print('Creating DB...')
   
-os.remove(DB_PATH)
 conn = sqlite3.connect(DB_PATH)
 cursor = conn.cursor()
 

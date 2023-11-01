@@ -16,3 +16,8 @@ export const ArrowBackIcon = styled(ArrowBack)(() => ({
   width: 40,
   color: "#000",
 }));
+
+export const VehiclePageActionContainer = styled("div")(() => ({
+  display: "flex",
+  justifyContent: "center",
+}));

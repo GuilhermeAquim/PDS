@@ -2,12 +2,17 @@ import { Button, IconButton, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import {
   ArrowBackIcon,
+  VehiclePageActionContainer,
   VehiclePageContent,
   VehiclePageHeader,
 } from "./VehiclePage.styles";
+import { SellVehicleDialog } from "../../shared/components/SellVehicleDialog/SellVehicleDialog";
+import { useState } from "react";
 
 export const VehiclePage = (): JSX.Element => {
   const navigate = useNavigate();
+
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   return (
     <div>
@@ -29,11 +34,18 @@ export const VehiclePage = (): JSX.Element => {
           <Typography variant="h6">Ano: 2000</Typography>
           <Typography variant="h6">Cor: Vermelho</Typography>
           <Typography variant="h6">Informações: - </Typography>
-          <div style={{ display: "flex", justifyContent: "center" }}>
-            <Button variant="contained">Confirmar Venda</Button>
-          </div>
+          <VehiclePageActionContainer>
+            <Button variant="contained" onClick={() => setIsDialogOpen(true)}>
+              Confirmar Venda
+            </Button>
+          </VehiclePageActionContainer>
         </div>
       </VehiclePageContent>
+      <SellVehicleDialog
+        open={isDialogOpen}
+        onClose={() => setIsDialogOpen(false)}
+        vehicle={{}}
+      />
     </div>
   );
 };
