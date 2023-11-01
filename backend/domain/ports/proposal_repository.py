@@ -1,6 +1,9 @@
 from abc import abstractmethod, ABC
 from domain.entities.item import Item
 
+class ProposalNotFound(Exception):
+    pass
+
 class ProposalRepository(ABC):
     
     @abstractmethod
