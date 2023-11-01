@@ -19,7 +19,7 @@ class FlaskApp:
     def __validate_token(self, token):
         try:
             if token is None:
-                raise AuthenticationError
+                raise AuthenticationError('token is null')
             return self._auth_rep.validate_token(token)
         except AuthenticationError as exc:
             return jsonify({'message' : exc.args[0]}), 401
@@ -132,7 +132,7 @@ class FlaskApp:
             try:
                 self._proposal_rep.approve_proposal(item_id=payload.get('item_id'))
                 return jsonify({'success': True})
-            except (ItemNotExists) as exc:
+            except (ProposalNotFound) as exc:
                 return jsonify({'error' : exc.args[0]}), 404
             
         @self._app.route('/proposal/update', methods=['POST'])
@@ -179,7 +179,7 @@ class FlaskApp:
             try:
                 self._item_rep.remove_item(item_id=payload.get('item_id'))
                 return jsonify({'success': True})
-            except (ItemNotExists) as exc:
+            except (ItemNotFound) as exc:
                 return jsonify({'error' : exc.args[0]}), 404
             
         @self._app.route('/item/update', methods=['POST'])

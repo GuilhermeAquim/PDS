@@ -1,4 +1,4 @@
-from domain.ports.item_repository import ItemRepository
+from domain.ports.item_repository import ItemRepository, ItemNotFound
 from domain.entities.item import Item
 from adapter.base_sqlite import BaseSQLite
 
@@ -8,14 +8,11 @@ class ItemRepositorySQLite(BaseSQLite, ItemRepository):
         super().__init__(database_path)
 
     def search_item(self, name = None, item_id = None) -> list[Item]:
-        # return items that match name/item_id or all of them if both = None
-        query = """SELECT * FROM items"""
-        if item_id and name:
-            query += f" WHERE item_id = {item_id} AND name LIKE '%{name}%'"
-        elif item_id:
-            query += f" WHERE item_id = {item_id}"
-        elif name:
-            query += f" WHERE name LIKE '%{name}%'"
+        query = """SELECT * FROM items WHERE (sold IS NULL OR sold != 1 ) AND approved = 1"""
+        if item_id:
+            query += f" AND id = {item_id}"
+        if name:
+            query += f" AND name LIKE '%{name}%'"
         
         rows = self.select_data(query)
         if rows:
@@ -23,15 +20,16 @@ class ItemRepositorySQLite(BaseSQLite, ItemRepository):
         return []
     
     def remove_item(self, item_id) -> bool:
-        # delete row where item_id = x
-        query = f"""DELETE FROM items WHERE item_id = {item_id}"""
+        row = self.search_item(item_id)
+        if not row:
+            raise ItemNotFound(f"Item {item_id} not found")
+        
+        query = f"""DELETE FROM items WHERE id = ?"""
         args = (item_id,)
 
-        try:
-            self.delete_data(query, args)
-            return True
-        except Exception as e:
-            return False
+        self.delete_data(query, args)
+        return True
+
 
     def update_item(self, item_id, name, icon, year, color, manufacturer, proposed_date, proposal_user_id, annotation, purchase_price, sale_price, sold, sale_date, sale_annotation, sale_user_id) -> bool:
         args = []
