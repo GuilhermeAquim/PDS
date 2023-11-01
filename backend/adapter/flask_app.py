@@ -35,7 +35,8 @@ class FlaskApp:
                     login_data.get('login'),
                     login_data.get('password')
                 )
-                return jsonify({'token' : result})
+                user = self._user_rep.get_user_by_login(login_data.get('login'))
+                return jsonify({'token' : result, 'user' : user})
             except AuthenticationError as exc:
                 return jsonify({'message' : exc.args[0]}), 401
             
@@ -45,6 +46,8 @@ class FlaskApp:
             payload = request.json
             token = request.headers.get('Session-Token')
             new_user_data = payload['new_user']
+            print(request.headers)
+
             validated_token = self.__validate_token(token)
             if isinstance(validated_token, tuple):
                 return validated_token
