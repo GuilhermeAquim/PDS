@@ -10,24 +10,43 @@ import {
 import CloseIcon from "@mui/icons-material/Close";
 import { Button, IconButton, TextField, Typography } from "@mui/material";
 import { useState } from "react";
+import { Vehicle } from "../../types/Vehicle";
+import { useAppDispatch, useAppSelector } from "../../../hooks/reduxHooks";
+import { setVehicles } from "../../../redux/vehiclesSlice";
+import { useNavigate } from "react-router-dom";
+import { openSnackbar } from "../../../redux/snackbarSlice";
 
 type Props = {
-  vehicle: any;
+  vehicle: Vehicle;
   open: boolean;
   onClose: () => void;
 };
 
 export const SellVehicleDialog = ({ vehicle, open, onClose }: Props) => {
+  const { vehicles } = useAppSelector((state) => state.vehicles);
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
   const [value, setValue] = useState("");
   const [telephone, setTelephone] = useState("");
   const [customer, setCustomer] = useState("");
   const [email, setEmail] = useState("");
 
+  const handleSellVehicle = () => {
+    const updatedVehicles = vehicles.filter((v) => v.name !== vehicle.name);
+    dispatch(
+      openSnackbar({ message: "Veículo vendido com sucesso", type: "success" })
+    );
+    dispatch(setVehicles(updatedVehicles));
+    onClose();
+    navigate("/stock");
+  };
+
   return (
     <SellVehicleDialogContainer open={open} onClose={onClose}>
       <SellVehicleDialogContent>
         <SellVehicleDialogHeader>
-          <Typography>Gol 1.8 GTS 8V</Typography>
+          <Typography>{vehicle.name}</Typography>
           <IconButton onClick={onClose}>
             <CloseIcon />
           </IconButton>
@@ -69,7 +88,11 @@ export const SellVehicleDialog = ({ vehicle, open, onClose }: Props) => {
           </SellVehicleFormContainer>
         </div>
         <SellVehicleActionsContainer>
-          <Button variant="contained" style={{ marginRight: 16 }}>
+          <Button
+            variant="contained"
+            style={{ marginRight: 16 }}
+            onClick={handleSellVehicle}
+          >
             Confirmar
           </Button>
           <Button onClick={onClose} variant="outlined">

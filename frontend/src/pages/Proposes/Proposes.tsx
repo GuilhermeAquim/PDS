@@ -4,30 +4,45 @@ import { VehicleCard } from "../../shared/components/VehicleCard/VehicleCard";
 import { ProposesContainer, ProposesListContainer } from "./Proposes.styles";
 import { ApprovalDialog } from "../../shared/components/ApprovalDialog/ApprovalDialog";
 import { ConfirmationDialog } from "../../shared/components/ConfirmationDialog/ConfirmationDialog";
+import { Vehicle } from "../../shared/types/Vehicle";
+import { useAppDispatch, useAppSelector } from "../../hooks/reduxHooks";
+import { setProposals } from "../../redux/vehiclesSlice";
+import { openSnackbar } from "../../redux/snackbarSlice";
 
 export const Proposes = (): JSX.Element => {
+  const { proposals } = useAppSelector((state) => state.vehicles);
+  const dispatch = useAppDispatch();
+
   const [filter, setFilter] = useState("");
-  const [vehicles, setVehicles] = useState<any[]>([]);
-  const [filteredVehicles, setFilteredVehicles] = useState<any[]>([]);
+  const [filteredVehicles, setFilteredVehicles] = useState<Vehicle[]>([]);
 
   const [approvalDialogOpen, setApprovalDialogOpen] = useState(false);
   const [disapprovalDialogOpen, setDisapprovalDialogOpen] = useState(false);
-
-  useEffect(() => {
-    const getVehicles = async () => {
-      setVehicles(["1", "2", "3", "4", "5", "6"]);
-    };
-
-    getVehicles();
-  }, []);
+  const [selectedProposal, setSelectedProposal] = useState<Vehicle | undefined>(
+    undefined
+  );
 
   useEffect(() => {
     setFilteredVehicles(
-      vehicles.filter((vehicle) =>
-        vehicle.toLowerCase().includes(filter.toLowerCase())
+      proposals.filter((vehicle) =>
+        vehicle.name?.toLowerCase().includes(filter.toLowerCase())
       )
     );
-  }, [filter, vehicles]);
+  }, [filter, proposals]);
+
+  const handleRemoveProposal = () => {
+    const updatedProposals = proposals.filter(
+      (p) => p.name !== selectedProposal?.name
+    );
+    dispatch(setProposals(updatedProposals));
+    dispatch(
+      openSnackbar({
+        message: "Proposta removida com sucesso",
+        type: "success",
+      })
+    );
+    setDisapprovalDialogOpen(false);
+  };
 
   return (
     <ProposesContainer>
@@ -41,18 +56,25 @@ export const Proposes = (): JSX.Element => {
       <ProposesListContainer>
         {filteredVehicles.map((vehicle) => (
           <VehicleCard
+            key={vehicle.name}
             vehicle={vehicle}
             actions={
               <>
                 <Button
                   variant="outlined"
-                  onClick={() => setDisapprovalDialogOpen(true)}
+                  onClick={() => {
+                    setSelectedProposal(vehicle);
+                    setDisapprovalDialogOpen(true);
+                  }}
                 >
                   Reprovar
                 </Button>
                 <Button
                   variant="contained"
-                  onClick={() => setApprovalDialogOpen(true)}
+                  onClick={() => {
+                    setSelectedProposal(vehicle);
+                    setApprovalDialogOpen(true);
+                  }}
                 >
                   Aprovar
                 </Button>
@@ -62,19 +84,25 @@ export const Proposes = (): JSX.Element => {
           />
         ))}
       </ProposesListContainer>
-      <ApprovalDialog
-        open={approvalDialogOpen}
-        onClose={() => setApprovalDialogOpen(false)}
-        vehicle={{}}
-      />
+      {selectedProposal && (
+        <ApprovalDialog
+          open={approvalDialogOpen}
+          onClose={() => setApprovalDialogOpen(false)}
+          vehicle={selectedProposal}
+        />
+      )}
       <ConfirmationDialog
         open={disapprovalDialogOpen}
         onClose={() => setDisapprovalDialogOpen(false)}
         title="Reprovar Proposta"
-        text="Tem certeza que deseja reprovar a proposta do veículo X? A ação não pode ser desfeita."
+        text={`Tem certeza que deseja reprovar a proposta do veículo ${selectedProposal?.name}? A ação não pode ser desfeita.`}
         actions={
           <>
-            <Button variant="outlined" style={{ marginRight: 16 }}>
+            <Button
+              variant="outlined"
+              style={{ marginRight: 16 }}
+              onClick={handleRemoveProposal}
+            >
               Reprovar
             </Button>
             <Button

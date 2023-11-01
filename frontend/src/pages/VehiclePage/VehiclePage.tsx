@@ -8,9 +8,11 @@ import {
 } from "./VehiclePage.styles";
 import { SellVehicleDialog } from "../../shared/components/SellVehicleDialog/SellVehicleDialog";
 import { useState } from "react";
+import { useAppSelector } from "../../hooks/reduxHooks";
 
 export const VehiclePage = (): JSX.Element => {
   const navigate = useNavigate();
+  const { selectedVehicle } = useAppSelector((state) => state.vehicles);
 
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
@@ -20,7 +22,7 @@ export const VehiclePage = (): JSX.Element => {
         <IconButton size="large" onClick={() => navigate(-1)}>
           <ArrowBackIcon />
         </IconButton>
-        <Typography variant="h2">Gol 1.8 GTS 8V</Typography>
+        <Typography variant="h2">{selectedVehicle?.name}</Typography>
       </VehiclePageHeader>
       <VehiclePageContent>
         <div>
@@ -30,10 +32,11 @@ export const VehiclePage = (): JSX.Element => {
           />
         </div>
         <div>
-          <Typography variant="h6">Motor: 1.8 8V</Typography>
-          <Typography variant="h6">Ano: 2000</Typography>
-          <Typography variant="h6">Cor: Vermelho</Typography>
-          <Typography variant="h6">Informações: - </Typography>
+          <Typography variant="h6">Ano: {selectedVehicle?.year}</Typography>
+          <Typography variant="h6">Cor: {selectedVehicle?.color}</Typography>
+          <Typography variant="h6">
+            Preço Compra: {selectedVehicle?.purchasePrice}
+          </Typography>
           <VehiclePageActionContainer>
             <Button variant="contained" onClick={() => setIsDialogOpen(true)}>
               Confirmar Venda
@@ -41,11 +44,13 @@ export const VehiclePage = (): JSX.Element => {
           </VehiclePageActionContainer>
         </div>
       </VehiclePageContent>
-      <SellVehicleDialog
-        open={isDialogOpen}
-        onClose={() => setIsDialogOpen(false)}
-        vehicle={{}}
-      />
+      {selectedVehicle && (
+        <SellVehicleDialog
+          open={isDialogOpen}
+          onClose={() => setIsDialogOpen(false)}
+          vehicle={selectedVehicle}
+        />
+      )}
     </div>
   );
 };

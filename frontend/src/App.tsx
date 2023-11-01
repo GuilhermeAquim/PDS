@@ -5,6 +5,8 @@ import { VehiclePage } from "./pages/VehiclePage/VehiclePage";
 import { Header } from "./shared/components/Header/Header";
 import { Proposes } from "./pages/Proposes/Proposes";
 import { UsersPage } from "./pages/UsersPage/UsersPage";
+import "./shared/config/axiosBase";
+import { CustomSnackbar } from "./shared/components/CustomSnackbar/CustomSnackbar";
 
 function App() {
   return (
@@ -50,6 +52,7 @@ function App() {
             }
           />
         </Routes>
+        <CustomSnackbar />
       </BrowserRouter>
     </>
   );

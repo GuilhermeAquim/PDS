@@ -19,8 +19,12 @@ import {
   UsersPageUsersTitle,
 } from "./UsersPage.styles";
 import { ConfirmationDialog } from "../../shared/components/ConfirmationDialog/ConfirmationDialog";
+import { useAppDispatch } from "../../hooks/reduxHooks";
+import { openSnackbar } from "../../redux/snackbarSlice";
 
 export const UsersPage = (): JSX.Element => {
+  const dispatch = useAppDispatch();
+
   const [users, setUsers] = useState<User[]>([]);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [selectedUser, setSelectedUser] = useState<User | undefined>(undefined);
@@ -32,17 +36,48 @@ export const UsersPage = (): JSX.Element => {
   useEffect(() => {
     const getUsers = async () => {
       setUsers([
-        { id: 1, name: "Pedro" } as User,
-        { id: 2, name: "Ana" } as User,
+        { id_: 1, name: "Pedro" } as User,
+        { id_: 2, name: "Ana" } as User,
       ]);
     };
 
     getUsers();
   }, []);
 
+  const handleAddUser = () => {
+    const newUser: User = {
+      name,
+      login: username,
+      admin: false,
+      password,
+      id_: 0,
+    };
+
+    setUsers([...users, newUser]);
+    setName("");
+    setUsername("");
+    setPassword("");
+
+    dispatch(
+      openSnackbar({ message: "Usuário criado com sucesso", type: "success" })
+    );
+  };
+
   const closeDialog = () => {
     setIsDialogOpen(false);
     setSelectedUser(undefined);
+  };
+
+  const handleRemoveUser = () => {
+    const updatedUsers = users.filter(
+      (user) => user.name !== selectedUser?.name
+    );
+
+    dispatch(
+      openSnackbar({ message: "Usuário removido com sucesso", type: "success" })
+    );
+    setUsers(updatedUsers);
+    closeDialog();
   };
 
   return (
@@ -74,6 +109,7 @@ export const UsersPage = (): JSX.Element => {
           <Button
             variant="contained"
             disabled={!name || !username || !password}
+            onClick={handleAddUser}
           >
             Salvar
           </Button>
@@ -85,7 +121,7 @@ export const UsersPage = (): JSX.Element => {
         </UsersPageUsersTitle>
         <div>
           {users.map((user) => (
-            <UsersPageUserItem key={user.id}>
+            <UsersPageUserItem key={user.id_}>
               <UsersPageUserInfo>
                 <Avatar>{user.name[0]}</Avatar>
                 <Typography style={{ marginLeft: 16 }}>{user.name}</Typography>
@@ -109,7 +145,11 @@ export const UsersPage = (): JSX.Element => {
         text={`Tem certeza que deseja remover o usuário ${selectedUser?.name}? A ação não pode ser desfeita.`}
         actions={
           <>
-            <Button variant="outlined" style={{ marginRight: 16 }}>
+            <Button
+              variant="outlined"
+              style={{ marginRight: 16 }}
+              onClick={handleRemoveUser}
+            >
               Remover
             </Button>
             <Button variant="contained" onClick={closeDialog}>
