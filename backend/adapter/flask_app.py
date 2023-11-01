@@ -1,4 +1,5 @@
 from flask import Flask, request, jsonify
+from backend.domain.ports.expense_repository import ExpenseRepository
 from domain.ports import *
 from flask_expects_json import expects_json
 from adapter.flask_schemas import *
@@ -6,7 +7,7 @@ from flask_cors import CORS
 
 
 class FlaskApp:
-    def __init__(self, auth_rep : AuthRepository, user_rep: UserRepository, sale_rep : SaleRepository, item_rep : ItemRepository, proposal_rep : ProposalRepository) -> None:
+    def __init__(self, auth_rep : AuthRepository, user_rep: UserRepository, sale_rep : SaleRepository, item_rep : ItemRepository, proposal_rep : ProposalRepository, expense_rep : ExpenseRepository) -> None:
         self._app = Flask(__name__)
         CORS(self._app)
         
@@ -15,6 +16,7 @@ class FlaskApp:
         self._sale_rep = sale_rep
         self._item_rep = item_rep
         self._proposal_rep = proposal_rep
+        self._expense_rep = expense_rep
         
         self.__setup_routes()
         
@@ -266,6 +268,42 @@ class FlaskApp:
                     sale_price=payload.get('sale_price'),
                     sale_annotation = payload.get('sale_annotation'),
                     sale_user_id = payload.get('sale_user_id'),
+                )
+                return jsonify({'success': True})
+            except (UserNotExists, ItemNotExists) as exc:
+                return jsonify({'error' : exc.args[0]}), 404
+            
+        @self._app.route('/expense/search', methods=['GET'])
+        def search_expense():
+            token = request.headers.get('Session-Token')
+            validated_token = self.__validate_token(token)
+            if isinstance(validated_token, tuple):
+                return validated_token
+            
+            item_id = request.args.get('item_id')
+            name = request.args.get('name')
+            
+            items = self._expense_rep.search_item(item_id=item_id, name=name)
+            
+            return jsonify({'count': len(items), 'items' : items})
+        
+        @self._app.route('/expense/create', methods=['POST'])
+        @expects_json(CREATE_EXPENSE_SCHEMA)
+        def create_expense():
+            token = request.headers.get('Session-Token')
+            validated_token = self.__validate_token(token)
+            if isinstance(validated_token, tuple):
+                return validated_token
+            
+            payload = request.json
+            
+            try:
+                self._expense_rep.create_expense(
+                    expense_register_date=payload.get('expense_register_date'),
+                    expense_annotation=payload.get('expense_annotation'),
+                    item_id=payload.get('item_id'),
+                    expense_price=payload.get('expense_price'),
+                    expense_register_user_id=payload.get('expense_register_user_id'),
                 )
                 return jsonify({'success': True})
             except (UserNotExists, ItemNotExists) as exc:
