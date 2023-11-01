@@ -1,5 +1,4 @@
 from flask import Flask, request, jsonify
-from backend.domain.ports.expense_repository import ExpenseRepository
 from domain.ports import *
 from flask_expects_json import expects_json
 from adapter.flask_schemas import *
