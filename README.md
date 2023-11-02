@@ -95,5 +95,11 @@ Trabalho prático de Prática em Desenvolvimento de Software do DCC-UFMG
 - Criar rota para recuperar detalhes de um item do estoque - Guilherme
 - Implementar o somatório do valor gasto com o veículo - Arthur
 
+# Arquitetura Hexagonal
+**Por que usar?
+- A arquitetura hexagonal estrutura o código de forma a facilitar a localização dos vários elementos do código e a construção de testes para os mesmos.
+
+
+
 
 
