@@ -55,6 +55,7 @@
     ]
   },
   "devDependencies": {
-    "@types/humps": "^2.0.5"
+    "@types/humps": "^2.0.5",
+    "cypress": "^13.6.0"
   }
 }

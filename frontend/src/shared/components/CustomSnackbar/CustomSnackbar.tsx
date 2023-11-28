@@ -11,6 +11,7 @@ export const CustomSnackbar = () => {
       open={open}
       autoHideDuration={6000}
       onClose={() => dispatch(closeSnackbar())}
+      id="snackbar"
     >
       <Alert onClose={() => dispatch(closeSnackbar())} severity={type}>
         {message}

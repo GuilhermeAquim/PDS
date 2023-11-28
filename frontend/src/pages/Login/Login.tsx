@@ -43,6 +43,7 @@ export const Login = (): JSX.Element => {
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             label="Username"
+            id="username"
           />
           <TextField
             variant="outlined"
@@ -50,6 +51,7 @@ export const Login = (): JSX.Element => {
             onChange={(e) => setPassword(e.target.value)}
             label="Password"
             type="password"
+            id="password"
           />
         </LoginInputs>
         <div>
@@ -57,6 +59,7 @@ export const Login = (): JSX.Element => {
             disabled={!username || !password}
             variant="contained"
             onClick={handleLoginClick}
+            className="loginButton"
           >
             Login
           </Button>
