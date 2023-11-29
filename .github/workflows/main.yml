@@ -18,6 +18,8 @@ jobs:
         uses: actions/setup-python@v2
         with:
           python-version: 3.x
+
+      - name: Set up Env
         run: | 
           pip install --upgrade pip
           python3 -m venv env
