@@ -4,3 +4,4 @@ flask-expects-json
 pandas
 flask-cors
 pytest
+coverage
