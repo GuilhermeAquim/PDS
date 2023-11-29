@@ -90,12 +90,14 @@ export const UsersPage = (): JSX.Element => {
             label="Nome completo"
             value={name}
             onChange={(e) => setName(e.target.value)}
+            id="new-user-name"
           />
           <TextField
             variant="outlined"
             label="Usuário"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
+            id="new-user-username"
           />
           <TextField
             variant="outlined"
@@ -103,6 +105,7 @@ export const UsersPage = (): JSX.Element => {
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            id="new-user-password"
           />
         </UsersPageFormContainer>
         <UsersPageFormAction>
@@ -110,6 +113,7 @@ export const UsersPage = (): JSX.Element => {
             variant="contained"
             disabled={!name || !username || !password}
             onClick={handleAddUser}
+            id="new-user-create"
           >
             Salvar
           </Button>
@@ -121,12 +125,13 @@ export const UsersPage = (): JSX.Element => {
         </UsersPageUsersTitle>
         <div>
           {users.map((user) => (
-            <UsersPageUserItem key={user.id_}>
+            <UsersPageUserItem key={user.id_} id={user.name}>
               <UsersPageUserInfo>
                 <Avatar>{user.name[0]}</Avatar>
                 <Typography style={{ marginLeft: 16 }}>{user.name}</Typography>
               </UsersPageUserInfo>
               <IconButton
+                id={`icon-${user.name}`}
                 onClick={() => {
                   setSelectedUser(user);
                   setIsDialogOpen(true);
@@ -146,6 +151,7 @@ export const UsersPage = (): JSX.Element => {
         actions={
           <>
             <Button
+              id="remove-user-btn"
               variant="outlined"
               style={{ marginRight: 16 }}
               onClick={handleRemoveUser}

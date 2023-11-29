@@ -19,15 +19,21 @@ export const Header = (): JSX.Element => {
         <Typography variant="h4">SGNV</Typography>
       </HeaderLogoContainer>
       <HeaderActions>
-        <HeaderAction onClick={() => navigate("/stock")}>
+        <HeaderAction onClick={() => navigate("/stock")} id="navigate-stock">
           <Typography>Estoque</Typography>
         </HeaderAction>
         {loggedInUser?.admin && (
           <>
-            <HeaderAction onClick={() => navigate("/proposes")}>
+            <HeaderAction
+              onClick={() => navigate("/proposes")}
+              id="navigate-proposes"
+            >
               <Typography>Propostas</Typography>
             </HeaderAction>
-            <HeaderAction onClick={() => navigate("/users")}>
+            <HeaderAction
+              onClick={() => navigate("/users")}
+              id="navigate-users"
+            >
               <Typography>Usuários</Typography>
             </HeaderAction>
           </>

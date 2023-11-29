@@ -41,7 +41,11 @@ export const Stock = (): JSX.Element => {
           />
         </div>
         <div>
-          <Button onClick={() => setIsDialogOpen(true)} variant="contained">
+          <Button
+            onClick={() => setIsDialogOpen(true)}
+            variant="contained"
+            id="new-proposal-btn"
+          >
             Nova Proposta
           </Button>
         </div>

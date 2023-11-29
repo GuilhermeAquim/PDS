@@ -78,6 +78,7 @@ export const ApprovalDialog = ({
               variant="outlined"
               label="Valor Mínimo"
               type="number"
+              id="modal-min-value"
             />
           </ApprovalInputContainer>
           <ApprovalActionsContainer>
@@ -86,6 +87,7 @@ export const ApprovalDialog = ({
               style={{ marginRight: 16 }}
               onClick={handleApprove}
               disabled={!minValue}
+              id="modal-approve-btn"
             >
               Aprovar
             </Button>

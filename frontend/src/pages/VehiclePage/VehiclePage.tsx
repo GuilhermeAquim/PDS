@@ -38,7 +38,11 @@ export const VehiclePage = (): JSX.Element => {
             Preço Compra: {selectedVehicle?.purchasePrice}
           </Typography>
           <VehiclePageActionContainer>
-            <Button variant="contained" onClick={() => setIsDialogOpen(true)}>
+            <Button
+              variant="contained"
+              onClick={() => setIsDialogOpen(true)}
+              id="confirm-sell"
+            >
               Confirmar Venda
             </Button>
           </VehiclePageActionContainer>

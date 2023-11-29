@@ -65,6 +65,7 @@ export const SellVehicleDialog = ({ vehicle, open, onClose }: Props) => {
               variant="outlined"
               label="Valor"
               type="number"
+              id="modal-value"
             />
             <TextField
               value={telephone}
@@ -72,18 +73,21 @@ export const SellVehicleDialog = ({ vehicle, open, onClose }: Props) => {
               variant="outlined"
               label="Telefone"
               type="number"
+              id="modal-phone"
             />
             <TextField
               value={customer}
               onChange={(e) => setCustomer(e.target.value)}
               variant="outlined"
               label="Cliente"
+              id="modal-customer"
             />
             <TextField
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               variant="outlined"
               label="Email"
+              id="modal-email"
             />
           </SellVehicleFormContainer>
         </div>
@@ -92,6 +96,7 @@ export const SellVehicleDialog = ({ vehicle, open, onClose }: Props) => {
             variant="contained"
             style={{ marginRight: 16 }}
             onClick={handleSellVehicle}
+            id="modal-sell-vehicle-btn"
           >
             Confirmar
           </Button>

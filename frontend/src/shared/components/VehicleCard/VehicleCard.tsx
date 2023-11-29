@@ -27,6 +27,7 @@ export const VehicleCard = ({
 
   return (
     <VehicleCardContainer
+      id={`vehicle-${vehicle.year}`}
       onClick={() => {
         if (!isPropose) {
           dispatch(setSelectedVehicle(vehicle));

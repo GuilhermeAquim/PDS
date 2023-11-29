@@ -66,6 +66,7 @@ export const Proposes = (): JSX.Element => {
                     setSelectedProposal(vehicle);
                     setDisapprovalDialogOpen(true);
                   }}
+                  id="reject-btn"
                 >
                   Reprovar
                 </Button>
@@ -75,6 +76,7 @@ export const Proposes = (): JSX.Element => {
                     setSelectedProposal(vehicle);
                     setApprovalDialogOpen(true);
                   }}
+                  id="approve-btn"
                 >
                   Aprovar
                 </Button>
@@ -102,6 +104,7 @@ export const Proposes = (): JSX.Element => {
               variant="outlined"
               style={{ marginRight: 16 }}
               onClick={handleRemoveProposal}
+              id="modal-reject-btn"
             >
               Reprovar
             </Button>

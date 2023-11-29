@@ -70,27 +70,32 @@ export const NewProposalDialog = ({ open, onClose }: Props): JSX.Element => {
               label="Modelo"
               value={model}
               onChange={(e) => setModel(e.target.value)}
+              id="model"
             />
             <TextField
               label="Fabricante"
               value={company}
               onChange={(e) => setCompany(e.target.value)}
+              id="company"
             />
             <TextField
               label="Motor"
               value={engine}
               onChange={(e) => setEngine(e.target.value)}
+              id="engine"
             />
             <TextField
               label="ano"
               type="number"
               value={year}
               onChange={(e) => setYear(e.target.value)}
+              id="year"
             />
             <TextField
               label="cor"
               value={color}
               onChange={(e) => setColor(e.target.value)}
+              id="color"
             />
           </div>
           <ProposalInputContainer>
@@ -100,6 +105,7 @@ export const NewProposalDialog = ({ open, onClose }: Props): JSX.Element => {
               variant="outlined"
               label="Valor Mínimo"
               type="number"
+              id="minValue"
             />
           </ProposalInputContainer>
           <ProposalActionsContainer>
@@ -107,6 +113,7 @@ export const NewProposalDialog = ({ open, onClose }: Props): JSX.Element => {
               variant="contained"
               style={{ marginRight: 16 }}
               onClick={handleConfirm}
+              id="confirm-btn"
             >
               Criar
             </Button>
